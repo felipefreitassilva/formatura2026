@@ -14,607 +14,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
     rel="stylesheet">
-
-  <style>
-    :root {
-
-      --navy: #0b2342;
-      --blue: #184c89;
-      --gold: #d9b44a;
-      --cream: #faf7f2;
-      --white: #ffffff;
-      --shadow: 0 20px 60px rgba(0, 0, 0, .18);
-
-    }
-
-    * {
-
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-
-    }
-
-    html {
-
-      scroll-behavior: smooth;
-
-    }
-
-    body {
-
-      font-family: Poppins, sans-serif;
-      background: linear-gradient(180deg,
-          #fefcf8 0%,
-          #f9f5ec 100%);
-
-      color: var(--navy);
-      overflow-x: hidden;
-
-    }
-
-    a {
-
-      text-decoration: none;
-      color: inherit;
-
-    }
-
-    button {
-
-      font-family: inherit;
-
-    }
-
-    #confetti {
-
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 999;
-
-    }
-
-    .hero {
-
-      min-height: 100vh;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 40px;
-
-      position: relative;
-      overflow: hidden;
-
-    }
-
-    .hero::before {
-
-      content: "";
-
-      position: absolute;
-
-      width: 900px;
-      height: 900px;
-
-      border-radius: 50%;
-
-      background:
-
-        radial-gradient(circle,
-          rgba(217, 180, 74, .18),
-          transparent 70%);
-
-      top: -400px;
-      right: -250px;
-
-    }
-
-    .hero::after {
-
-      content: "";
-
-      position: absolute;
-
-      width: 700px;
-      height: 700px;
-
-      border-radius: 50%;
-
-      background:
-
-        radial-gradient(circle,
-          rgba(24, 76, 137, .10),
-          transparent 70%);
-
-      bottom: -350px;
-      left: -250px;
-
-    }
-
-    .hero-card {
-
-      position: relative;
-      z-index: 2;
-
-      background: white;
-
-      width: min(92vw, 750px);
-
-      border-radius: 28px;
-
-      padding: 42px;
-
-      box-shadow: var(--shadow);
-
-      text-align: center;
-
-      animation: fadeUp 1s ease;
-
-    }
-
-    .invite {
-
-      font-size: 1rem;
-
-      font-weight: 600;
-
-      letter-spacing: .12em;
-
-      text-transform: uppercase;
-
-      color: var(--gold);
-
-      margin-bottom: 10px;
-
-    }
-
-    h1 {
-
-      font-family: "Playfair Display", serif;
-
-      font-size: 4rem;
-
-      line-height: 1;
-
-    }
-
-    .year {
-
-      font-size: 1.4rem;
-
-      font-weight: 700;
-
-      letter-spacing: .45em;
-
-      margin-top: 10px;
-
-      color: var(--blue);
-
-    }
-
-    .tagline {
-
-      margin-top: 24px;
-
-      font-size: 1.15rem;
-
-      line-height: 1.8;
-
-    }
-
-    .scroll-indicator {
-
-      margin-top: 40px;
-
-      font-size: .95rem;
-
-      opacity: .7;
-
-      animation: bounce 2s infinite;
-
-    }
-
-    section {
-
-      padding: 70px 22px;
-
-    }
-
-    .container {
-
-      max-width: 900px;
-      margin: auto;
-
-    }
-
-    .section-title {
-
-      font-size: 2rem;
-      font-weight: 800;
-
-      text-align: center;
-
-      margin-bottom: 30px;
-
-    }
-
-    .countdown {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 14px;
-
-      margin-top: 20px;
-
-    }
-
-    .time-box {
-
-      background: white;
-
-      border-radius: 18px;
-
-      padding: 20px 10px;
-
-      box-shadow: var(--shadow);
-
-    }
-
-    .time-value {
-
-      font-size: 2rem;
-      font-weight: 800;
-
-    }
-
-    .time-label {
-
-      margin-top: 8px;
-
-      font-size: .82rem;
-
-      letter-spacing: .12em;
-
-      text-transform: uppercase;
-
-      opacity: .7;
-
-    }
-
-    .slider {
-
-      position: relative;
-
-      border-radius: 24px;
-
-      overflow: hidden;
-
-      box-shadow: var(--shadow);
-
-      aspect-ratio: 4/5;
-
-      background: #ddd;
-
-    }
-
-    .slide {
-
-      position: absolute;
-
-      inset: 0;
-
-      opacity: 0;
-
-      transition: opacity .8s ease,
-        transform 7s linear;
-
-      background-size: cover;
-      background-position: center;
-
-      transform: scale(1);
-
-    }
-
-    .slide.active {
-
-      opacity: 1;
-
-      transform: scale(1.08);
-
-    }
-
-    .dots {
-
-      display: flex;
-
-      justify-content: center;
-
-      gap: 10px;
-
-      margin-top: 16px;
-
-    }
-
-    .dot {
-
-      width: 10px;
-      height: 10px;
-
-      border-radius: 50%;
-
-      background: #d0d0d0;
-
-      transition: .3s;
-
-    }
-
-    .dot.active {
-
-      background: var(--gold);
-      transform: scale(1.3);
-
-    }
-
-    .names {
-
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 16px;
-
-      margin-top: 28px;
-
-    }
-
-    .name {
-
-      background: white;
-
-      padding: 18px;
-
-      border-radius: 18px;
-
-      text-align: center;
-
-      font-weight: 700;
-
-      box-shadow: var(--shadow);
-
-    }
-
-    .details {
-
-      display: grid;
-
-      gap: 18px;
-
-      margin-top: 30px;
-
-    }
-
-    .detail {
-
-      background: white;
-
-      padding: 22px;
-
-      border-radius: 18px;
-
-      box-shadow: var(--shadow);
-
-    }
-
-    .detail h3 {
-
-      font-size: 1rem;
-
-      color: var(--gold);
-
-      margin-bottom: 8px;
-
-    }
-
-    .detail p {
-
-      font-size: 1.08rem;
-
-    }
-
-    .actions {
-
-      display: flex;
-
-      gap: 14px;
-
-      margin-top: 32px;
-
-      flex-wrap: wrap;
-
-    }
-
-    .btn {
-
-      flex: 1;
-
-      min-height: 58px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      border-radius: 18px;
-
-      font-weight: 700;
-
-      transition: .25s;
-
-    }
-
-    .btn-primary {
-
-      background: var(--blue);
-
-      color: white;
-
-    }
-
-    .btn-secondary {
-
-      background: white;
-
-      border: 2px solid var(--blue);
-
-      color: var(--blue);
-
-    }
-
-    .btn:hover {
-
-      transform: translateY(-2px);
-
-    }
-
-    .floating {
-
-      position: fixed;
-
-      left: 50%;
-
-      bottom: 18px;
-
-      transform: translateX(-50%);
-
-      background: white;
-
-      box-shadow: var(--shadow);
-
-      border-radius: 999px;
-
-      padding: 8px;
-
-      display: flex;
-
-      gap: 8px;
-
-      z-index: 500;
-
-    }
-
-    .floating a {
-
-      padding: 12px 18px;
-
-      border-radius: 999px;
-
-      font-weight: 700;
-
-    }
-
-    .floating a:first-child {
-
-      background: var(--blue);
-      color: white;
-
-    }
-
-    .floating a:last-child {
-
-      background: var(--gold);
-      color: white;
-
-    }
-
-    footer {
-
-      padding: 80px 20px 120px;
-
-      text-align: center;
-
-      font-size: 1.2rem;
-
-      font-weight: 600;
-
-    }
-
-    @keyframes fadeUp {
-
-      from {
-
-        opacity: 0;
-        transform: translateY(40px);
-
-      }
-
-      to {
-
-        opacity: 1;
-        transform: translateY(0);
-
-      }
-
-    }
-
-    @keyframes bounce {
-
-      0%,
-      100% {
-
-        transform: translateY(0);
-
-      }
-
-      50% {
-
-        transform: translateY(8px);
-
-      }
-
-    }
-
-    @media(max-width:700px) {
-
-      h1 {
-
-        font-size: 2.8rem;
-
-      }
-
-      .countdown {
-
-        grid-template-columns: repeat(2, 1fr);
-
-      }
-
-      .names {
-
-        grid-template-columns: 1fr;
-
-      }
-
-      .actions {
-
-        flex-direction: column;
-
-      }
-
-      .hero-card {
-
-        padding: 28px;
-
-      }
-
-    }
-  </style>
-
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -626,34 +27,24 @@
     <div class="hero-card">
 
       <div class="invite">
-
         ✨ Vem celebrar com a gente
-
       </div>
 
       <h1>
-
         FORMATURA
-
       </h1>
 
       <div class="year">
-
         2026
-
       </div>
 
       <div class="tagline">
-
         Uma noite especial merece pessoas especiais.<br>
         Esperamos você para comemorar esta conquista!
-
       </div>
 
       <div class="scroll-indicator">
-
         ↓ role para começar ↓
-
       </div>
 
     </div>
@@ -665,59 +56,29 @@
     <div class="container">
 
       <div class="section-title">
-
         ⏳ Contagem Regressiva
-
       </div>
 
       <div class="countdown">
 
         <div class="time-box">
-
           <div id="days" class="time-value">--</div>
-
-          <div class="time-label">
-
-            Dias
-
-          </div>
-
+          <div class="time-label">Dias</div>
         </div>
 
         <div class="time-box">
-
           <div id="hours" class="time-value">--</div>
-
-          <div class="time-label">
-
-            Horas
-
-          </div>
-
+          <div class="time-label">Horas</div>
         </div>
 
         <div class="time-box">
-
           <div id="minutes" class="time-value">--</div>
-
-          <div class="time-label">
-
-            Min
-
-          </div>
-
+          <div class="time-label">Min</div>
         </div>
 
         <div class="time-box">
-
           <div id="seconds" class="time-value">--</div>
-
-          <div class="time-label">
-
-            Seg
-
-          </div>
-
+          <div class="time-label">Seg</div>
         </div>
 
       </div>
@@ -731,67 +92,34 @@
     <div class="container">
 
       <div class="section-title">
-
         📸 Nossos Momentos
-
       </div>
 
       <div class="slider" id="slider">
 
-        <div class="slide active" style="background-image:url('https://picsum.photos/900/1200?random=1');">
+        <div class="slide active"
+          style="background-image:url('https://picsum.photos/900/1200?random=1');">
         </div>
 
-        <div class="slide" style="background-image:url('https://picsum.photos/900/1200?random=2');">
+        <div class="slide"
+          style="background-image:url('https://picsum.photos/900/1200?random=2');">
         </div>
 
-        <div class="slide" style="background-image:url('https://picsum.photos/900/1200?random=3');">
+        <div class="slide"
+          style="background-image:url('https://picsum.photos/900/1200?random=3');">
         </div>
 
-        <div class="slide" style="background-image:url('https://picsum.photos/900/1200?random=4');">
+        <div class="slide"
+          style="background-image:url('https://picsum.photos/900/1200?random=4');">
         </div>
 
       </div>
 
       <div class="dots">
-
         <div class="dot active"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
-
-      </div>
-
-    </div>
-
-  </section>
-  <section>
-
-    <div class="container">
-
-      <div class="section-title">
-
-        🎓 Os Formandos
-
-      </div>
-
-      <div class="names">
-
-        <div class="name">
-          Carolina
-        </div>
-
-        <div class="name">
-          Felipe
-        </div>
-
-        <div class="name">
-          Mateus
-        </div>
-
-        <div class="name">
-          Paola
-        </div>
-
       </div>
 
     </div>
@@ -803,131 +131,84 @@
     <div class="container">
 
       <div class="section-title">
-
         📅 Informações
-
       </div>
 
       <div class="details">
 
         <div class="detail">
-
-          <h3>
-
-            Data
-
-          </h3>
-
-          <p>
-
-            14 de agosto de 2026
-
-          </p>
-
+          <h3>Data</h3>
+          <p>14 de agosto de 2026</p>
         </div>
 
         <div class="detail">
-
-          <h3>
-
-            Horário
-
-          </h3>
-
-          <p>
-
-            21h30
-
-          </p>
-
+          <h3>Horário</h3>
+          <p>21h30</p>
         </div>
 
         <div class="detail">
-
-          <h3>
-
-            Local
-
-          </h3>
-
-          <p>
-
-            British Club
-
-          </p>
-
+          <h3>Local</h3>
+          <p>British Club</p>
         </div>
 
         <div class="detail">
-
-          <h3>
-
-            Endereço
-
-          </h3>
-
-          <p>
-
-            R. Furriel Luiz Antonio de Vargas, 400
-
-          </p>
-
+          <h3>Endereço</h3>
+          <p>R. Furriel Luiz Antonio de Vargas, 400</p>
         </div>
 
       </div>
 
       <div class="actions">
 
-        <a class="btn btn-primary" target="_blank"
+        <a
+          class="btn btn-primary"
+          target="_blank"
           href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
 
           📍 Como chegar
 
         </a>
 
-        <a class="btn btn-secondary" target="_blank" href="https://wa.me/">
+        <button
+          class="btn btn-secondary"
+          id="rsvpButton"
+          type="button">
 
           🎉 Confirmar presença
 
-        </a>
+        </button>
 
       </div>
 
-    </div>
+      <div
+        id="rsvpContainer"
+        style="display:none;margin-top:20px;">
 
-  </section>
+        <select
+          id="graduateSelect"
+          style="width:100%;padding:14px;font-size:1rem;">
 
-  <section>
+          <option value="">
+            Escolha um formando
+          </option>
 
-    <div class="container">
+          <option value="carolina">
+            Carolina
+          </option>
 
-      <div class="section-title">
+          <option value="felipe">
+            Felipe
+          </option>
 
-        💙 Uma conquista compartilhada
+          <option value="mateus">
+            Mateus
+          </option>
 
-      </div>
+          <option value="paola">
+            Paola
+          </option>
 
-      <div style="
-background:white;
-padding:32px;
-border-radius:22px;
-box-shadow:var(--shadow);
-line-height:1.9;
-font-size:1.08rem;
-text-align:center;
-">
-
-        Cada aula, cada prova, cada desafio e cada amizade
-        fizeram parte dessa jornada.
-
-        <br><br>
-
-        Agora chegou o momento de celebrar,
-        e queremos dividir essa alegria com você.
-
-        <br><br>
-
-        ✨ Sua presença tornará essa noite ainda mais especial. ✨
+        </select>
 
       </div>
 
@@ -937,18 +218,22 @@ text-align:center;
 
   <div class="floating">
 
-    <a target="_blank"
+    <a
+      target="_blank"
       href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
 
       📍 Maps
 
     </a>
 
-    <a target="_blank" href="https://wa.me/">
+    <button
+      class="btn btn-secondary"
+      id="floatingRsvpButton"
+      type="button">
 
       🎉 RSVP
 
-    </a>
+    </button>
 
   </div>
 
@@ -957,1041 +242,6 @@ text-align:center;
     Esperamos você para celebrar conosco! 🎓✨
 
   </footer>
-
-  <script>
-
-    const targetDate = new Date(
-      "2026-08-14T21:30:00"
-    );
-
-    function updateCountdown() {
-
-      const now = new Date();
-
-      const diff =
-        targetDate - now;
-
-      if (diff <= 0) {
-
-        document.getElementById("days").textContent = "0";
-        document.getElementById("hours").textContent = "0";
-        document.getElementById("minutes").textContent = "0";
-        document.getElementById("seconds").textContent = "0";
-
-        return;
-
-      }
-
-      const seconds = Math.floor(diff / 1000);
-
-      const days = Math.floor(
-        seconds / 86400
-      );
-
-      const hours = Math.floor(
-        (seconds % 86400) / 3600
-      );
-
-      const minutes = Math.floor(
-        (seconds % 3600) / 60
-      );
-
-      const secs =
-        seconds % 60;
-
-      document.getElementById("days").textContent = days;
-
-      document.getElementById("hours").textContent =
-        String(hours).padStart(2, "0");
-
-      document.getElementById("minutes").textContent =
-        String(minutes).padStart(2, "0");
-
-      document.getElementById("seconds").textContent =
-        String(secs).padStart(2, "0");
-
-    }
-
-    updateCountdown();
-
-    setInterval(
-      updateCountdown,
-      1000
-    );
-
-    const slides = [
-      ...document.querySelectorAll(".slide")
-    ];
-
-    const dots = [
-      ...document.querySelectorAll(".dot")
-    ];
-
-    let current = 0;
-
-    function showSlide(index) {
-
-      slides.forEach((s, i) => {
-
-        s.classList.toggle(
-          "active",
-          i === index
-        );
-
-      });
-
-      dots.forEach((d, i) => {
-
-        d.classList.toggle(
-          "active",
-          i === index
-        );
-
-      });
-
-      current = index;
-
-    }
-
-    function nextSlide() {
-
-      showSlide(
-        (current + 1) % slides.length
-      );
-
-    }
-
-    let interval =
-      setInterval(
-        nextSlide,
-        4500
-      );
-
-    dots.forEach((dot, i) => {
-
-      dot.onclick = () => {
-
-        clearInterval(interval);
-
-        showSlide(i);
-
-        interval =
-          setInterval(
-            nextSlide,
-            4500
-          );
-
-      };
-
-    });
-
-    let startX = 0;
-
-    const slider =
-      document.getElementById(
-        "slider"
-      );
-
-    slider.addEventListener(
-      "touchstart",
-      e => {
-
-        startX =
-          e.touches[0].clientX;
-
-      }
-    );
-
-    slider.addEventListener(
-      "touchend",
-      e => {
-
-        const endX =
-          e.changedTouches[0].clientX;
-
-        const delta =
-          endX - startX;
-
-        if (Math.abs(delta) < 40) {
-
-          return;
-
-        }
-
-        clearInterval(interval);
-
-        if (delta < 0) {
-
-          showSlide(
-            (current + 1) % slides.length
-          );
-
-        }
-        else {
-
-          showSlide(
-            (current - 1 + slides.length) % slides.length
-          );
-
-        }
-
-        interval =
-          setInterval(
-            nextSlide,
-            4500
-          );
-
-      }
-    );
-    const canvas =
-      document.getElementById(
-        "confetti"
-      );
-
-    const ctx =
-      canvas.getContext("2d");
-
-    function resizeCanvas() {
-
-      canvas.width =
-        window.innerWidth;
-
-      canvas.height =
-        window.innerHeight;
-
-    }
-
-    resizeCanvas();
-
-    window.addEventListener(
-      "resize",
-      resizeCanvas
-    );
-
-    const pieces = [];
-
-    for (let i = 0; i < 180; i++) {
-
-      pieces.push({
-
-        x: Math.random() * canvas.width,
-
-        y: Math.random() * -canvas.height,
-
-        r: Math.random() * 6 + 3,
-
-        vx: (Math.random() - .5) * 3,
-
-        vy: Math.random() * 3 + 2,
-
-        rot: Math.random() * 360,
-
-        vr: (Math.random() - .5) * 10,
-
-        shape: Math.random() > .5 ? "rect" : "circle"
-
-      });
-
-    }
-
-    let confettiRunning = true;
-
-    function drawPiece(p) {
-
-      ctx.save();
-
-      ctx.translate(
-        p.x,
-        p.y
-      );
-
-      ctx.rotate(
-        p.rot * Math.PI / 180
-      );
-
-      const palette = [
-        "#184c89",
-        "#d9b44a",
-        "#ffffff",
-        "#4e7cc3",
-        "#efc75e"
-      ];
-
-      ctx.fillStyle =
-        palette[
-        Math.floor(
-          (Math.abs(
-            p.x + p.y
-          )) % palette.length
-        )
-        ];
-
-      if (p.shape === "rect") {
-
-        ctx.fillRect(
-          -p.r / 2,
-          -p.r / 2,
-          p.r,
-          p.r * 1.6
-        );
-
-      }
-      else {
-
-        ctx.beginPath();
-
-        ctx.arc(
-          0,
-          0,
-          p.r / 2,
-          0,
-          Math.PI * 2
-        );
-
-        ctx.fill();
-
-      }
-
-      ctx.restore();
-
-    }
-
-    function animateConfetti() {
-
-      ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-      if (confettiRunning) {
-
-        for (const p of pieces) {
-
-          p.x += p.vx;
-
-          p.y += p.vy;
-
-          p.rot += p.vr;
-
-          drawPiece(p);
-
-        }
-
-      }
-
-      requestAnimationFrame(
-        animateConfetti
-      );
-
-    }
-
-    animateConfetti();
-
-    setTimeout(() => {
-
-      confettiRunning = false;
-
-    }, 2200);
-
-    document.querySelectorAll(
-      ".btn"
-    ).forEach(btn => {
-
-      btn.addEventListener(
-        "click",
-        () => {
-
-          pieces.forEach(p => {
-
-            p.x = Math.random() * canvas.width;
-
-            p.y = Math.random() * -100;
-
-            p.vy = Math.random() * 5 + 3;
-
-          });
-
-          confettiRunning = true;
-
-          setTimeout(() => {
-
-            confettiRunning = false;
-
-          }, 1800);
-
-        });
-
-    });
-
-    function fadeInObserver() {
-
-      const observer =
-        new IntersectionObserver(
-
-          entries => {
-
-            entries.forEach(entry => {
-
-              if (entry.isIntersecting) {
-
-                entry.target.animate(
-
-                  [
-
-                    {
-
-                      opacity: 0,
-
-                      transform:
-                        "translateY(40px)"
-
-                    },
-
-                    {
-
-                      opacity: 1,
-
-                      transform:
-                        "translateY(0px)"
-
-                    }
-
-                  ],
-
-                  {
-
-                    duration: 700,
-
-                    fill: "forwards",
-
-                    easing:
-                      "ease-out"
-
-                  }
-
-                );
-
-                observer.unobserve(
-                  entry.target
-                );
-
-              }
-
-            });
-
-          },
-
-          {
-
-            threshold: .15
-
-          }
-
-        );
-
-      document.querySelectorAll(
-
-        ".section-title,.detail,.name,.time-box"
-
-      ).forEach(el => {
-
-        el.style.opacity = 0;
-
-        observer.observe(el);
-
-      });
-
-    }
-
-    fadeInObserver();
-
-    function createSparkle(x, y) {
-
-      const sparkle =
-        document.createElement(
-          "div"
-        );
-
-      sparkle.style.position =
-        "fixed";
-
-      sparkle.style.left =
-        x + "px";
-
-      sparkle.style.top =
-        y + "px";
-
-      sparkle.style.width =
-        "8px";
-
-      sparkle.style.height =
-        "8px";
-
-      sparkle.style.borderRadius =
-        "50%";
-
-      sparkle.style.pointerEvents =
-        "none";
-
-      sparkle.style.background =
-        "#d9b44a";
-
-      sparkle.style.boxShadow =
-        "0 0 12px #d9b44a";
-
-      sparkle.style.zIndex =
-        "9999";
-
-      document.body.appendChild(
-        sparkle
-      );
-
-      sparkle.animate(
-
-        [
-
-          {
-
-            transform:
-              "scale(0)",
-
-            opacity: 1
-
-          },
-
-          {
-
-            transform:
-              "scale(2)",
-
-            opacity: 0
-
-          }
-
-        ],
-
-        {
-
-          duration: 700,
-
-          easing: "ease-out"
-
-        }
-
-      ).onfinish = () => {
-
-        sparkle.remove();
-
-      };
-
-    }
-
-    window.addEventListener(
-
-      "pointerdown",
-
-      e => {
-
-        createSparkle(
-
-          e.clientX,
-
-          e.clientY
-
-        );
-
-      }
-
-    );
-    function addFloatingBackground() {
-
-      const wrapper = document.createElement("div");
-
-      wrapper.style.position = "fixed";
-      wrapper.style.inset = "0";
-      wrapper.style.pointerEvents = "none";
-      wrapper.style.overflow = "hidden";
-      wrapper.style.zIndex = "-1";
-
-      document.body.prepend(wrapper);
-
-      for (let i = 0; i < 25; i++) {
-
-        const circle = document.createElement("div");
-
-        const size = 40 + Math.random() * 180;
-
-        circle.style.position = "absolute";
-        circle.style.width = size + "px";
-        circle.style.height = size + "px";
-        circle.style.borderRadius = "50%";
-
-        circle.style.opacity = ".05";
-
-        circle.style.background =
-          Math.random() > .5
-            ?
-            "#184c89"
-            :
-            "#d9b44a";
-
-        circle.style.left =
-          Math.random() * 100 + "vw";
-
-        circle.style.top =
-          Math.random() * 100 + "vh";
-
-        circle.animate(
-
-          [
-            {
-              transform:
-                "translateY(0px) translateX(0px)"
-            },
-            {
-              transform:
-                `translateY(${-80 - Math.random() * 120}px)
-translateX(${Math.random() * 80 - 40}px)`
-            }
-          ],
-
-          {
-            duration:
-              8000 + Math.random() * 12000,
-            iterations: Infinity,
-            direction: "alternate",
-            easing: "ease-in-out"
-          }
-
-        );
-
-        wrapper.appendChild(circle);
-
-      }
-
-    }
-
-    addFloatingBackground();
-
-    function highlightCountdown() {
-
-      const boxes = [
-        ...document.querySelectorAll(
-          ".time-box"
-        )
-      ];
-
-      setInterval(() => {
-
-        boxes.forEach(box => {
-
-          box.animate(
-
-            [
-              {
-                transform: "scale(1)"
-              },
-              {
-                transform: "scale(1.04)"
-              },
-              {
-                transform: "scale(1)"
-              }
-            ],
-
-            {
-              duration: 350
-            }
-
-          );
-
-        });
-
-      }, 1000);
-
-    }
-
-    highlightCountdown();
-
-    document.querySelectorAll(
-      ".name"
-    ).forEach(card => {
-
-      card.addEventListener(
-        "mouseenter",
-        () => {
-
-          card.animate(
-
-            [
-              {
-                transform: "translateY(0px)"
-              },
-              {
-                transform: "translateY(-6px)"
-              },
-              {
-                transform: "translateY(0px)"
-              }
-            ],
-
-            {
-              duration: 350
-            }
-
-          );
-
-        });
-
-      card.addEventListener(
-        "touchstart",
-        () => {
-
-          card.animate(
-
-            [
-              {
-                transform: "scale(1)"
-              },
-              {
-                transform: "scale(1.04)"
-              },
-              {
-                transform: "scale(1)"
-              }
-            ],
-
-            {
-              duration: 250
-            }
-
-          );
-
-        },
-        {
-          passive: true
-        }
-      );
-
-    });
-
-    const heroCard =
-      document.querySelector(
-        ".hero-card"
-      );
-
-    window.addEventListener(
-      "scroll",
-      () => {
-
-        const y =
-          window.scrollY;
-
-        heroCard.style.transform =
-          `translateY(${y * 0.08}px)`;
-
-        heroCard.style.opacity =
-          Math.max(
-            1 - y / 700,
-            0
-          );
-
-      });
-
-    const revealElements = [
-      ...document.querySelectorAll(
-        ".detail,.name,.slider,.section-title,.time-box"
-      )
-    ];
-
-    revealElements.forEach(el => {
-
-      el.style.transition =
-        "transform .7s ease, opacity .7s ease";
-
-    });
-
-    function revealOnScroll() {
-
-      const trigger =
-        window.innerHeight * 0.88;
-
-      revealElements.forEach(el => {
-
-        const rect =
-          el.getBoundingClientRect();
-
-        if (rect.top < trigger) {
-
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0px)";
-
-        }
-        else {
-
-          el.style.opacity = ".01";
-          el.style.transform = "translateY(40px)";
-
-        }
-
-      });
-
-    }
-
-    window.addEventListener(
-      "scroll",
-      revealOnScroll
-    );
-
-    window.addEventListener(
-      "load",
-      revealOnScroll
-    );
-
-    document.querySelectorAll(
-      ".btn"
-    ).forEach(btn => {
-
-      btn.addEventListener(
-        "pointerdown",
-        () => {
-
-          btn.animate(
-
-            [
-              {
-                transform: "scale(1)"
-              },
-              {
-                transform: "scale(.95)"
-              },
-              {
-                transform: "scale(1)"
-              }
-            ],
-
-            {
-              duration: 180
-            }
-
-          );
-
-        });
-
-    });
-
-    const title = document.querySelector("h1");
-
-    const originalTitle =
-      title.textContent;
-
-    title.textContent = "";
-
-    let index = 0;
-
-    function typeTitle() {
-
-      if (index >
-        originalTitle.length) {
-
-        return;
-
-      }
-
-      title.textContent =
-        originalTitle.substring(
-          0,
-          index
-        );
-
-      index++;
-
-      setTimeout(
-        typeTitle,
-        90
-      );
-
-    }
-
-    typeTitle();
-
-    const year =
-      document.querySelector(
-        ".year"
-      );
-
-    year.animate(
-
-      [
-        {
-          opacity: 0,
-          transform:
-            "translateY(20px)"
-        },
-        {
-          opacity: 1,
-          transform:
-            "translateY(0)"
-        }
-      ],
-
-      {
-        delay: 900,
-        duration: 700,
-        fill: "forwards"
-      }
-
-    );
-    function autoHideFloatingBar() {
-
-      const bar = document.querySelector(".floating");
-
-      let lastScroll = 0;
-
-      window.addEventListener(
-
-        "scroll",
-
-        () => {
-
-          const current = window.scrollY;
-
-          if (current < 80) {
-
-            bar.style.transform =
-              "translateX(-50%) translateY(0px)";
-
-            lastScroll = current;
-            return;
-
-          }
-
-          if (current > lastScroll) {
-
-            bar.style.transform =
-              "translateX(-50%) translateY(120px)";
-          }
-          else {
-
-            bar.style.transform =
-              "translateX(-50%) translateY(0px)";
-
-          }
-
-          lastScroll = current;
-
-        }
-
-      );
-
-    }
-
-    autoHideFloatingBar();
-
-    function smoothPulse() {
-
-      const buttons = [
-        ...document.querySelectorAll(".btn")
-      ];
-
-      setInterval(() => {
-
-        buttons.forEach(btn => {
-
-          btn.animate(
-
-            [
-              {
-                transform: "scale(1)"
-              },
-              {
-                transform: "scale(1.02)"
-              },
-              {
-                transform: "scale(1)"
-              }
-            ],
-
-            {
-              duration: 700,
-              easing: "ease-in-out"
-            }
-
-          );
-
-        });
-
-      }, 7000);
-
-    }
-
-    smoothPulse();
-
-    document.addEventListener(
-
-      "visibilitychange",
-
-      () => {
-
-        if (document.hidden) {
-
-          clearInterval(interval);
-
-        }
-        else {
-
-          clearInterval(interval);
-
-          interval = setInterval(
-
-            nextSlide,
-
-            4500
-
-          );
-
-        }
-
-      }
-
-    );
-
-    const footer = document.querySelector("footer");
-
-    footer.animate(
-
-      [
-        {
-          opacity: 0,
-          transform: "translateY(30px)"
-        },
-        {
-          opacity: 1,
-          transform: "translateY(0px)"
-        }
-      ],
-
-      {
-        duration: 1000,
-        delay: 1200,
-        fill: "forwards"
-      }
-
-    );
-
-    console.log(
-      "%c🎓 Formatura 2026 🎉",
-      "font-size:24px;font-weight:bold;color:#184c89;"
-    );
-
-    console.log(
-      "%cEsperamos você!",
-      "font-size:16px;color:#d9b44a;"
-    );
-
-  </script>
 
 </body>
 
