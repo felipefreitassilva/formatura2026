@@ -3,11 +3,9 @@ const targetDate = new Date(
 );
 
 function updateCountdown() {
-
   const now = new Date();
 
-  const diff =
-    targetDate - now;
+  const diff = targetDate - now;
 
   if (diff <= 0) {
 
@@ -17,25 +15,17 @@ function updateCountdown() {
     document.getElementById("seconds").textContent = "0";
 
     return;
-
   }
 
   const seconds = Math.floor(diff / 1000);
 
-  const days = Math.floor(
-    seconds / 86400
-  );
+  const days = Math.floor(seconds / 86400);
 
-  const hours = Math.floor(
-    (seconds % 86400) / 3600
-  );
+  const hours = Math.floor((seconds % 86400) / 3600);
 
-  const minutes = Math.floor(
-    (seconds % 3600) / 60
-  );
+  const minutes = Math.floor((seconds % 3600) / 60);
 
-  const secs =
-    seconds % 60;
+  const secs = seconds % 60;
 
   document.getElementById("days").textContent = days;
 
@@ -47,7 +37,6 @@ function updateCountdown() {
 
   document.getElementById("seconds").textContent =
     String(secs).padStart(2, "0");
-
 }
 
 updateCountdown();
@@ -68,135 +57,84 @@ const dots = [
 let current = 0;
 
 function showSlide(index) {
-
   slides.forEach((s, i) => {
-
     s.classList.toggle(
       "active",
       i === index
     );
-
   });
 
   dots.forEach((d, i) => {
-
     d.classList.toggle(
       "active",
       i === index
     );
-
   });
 
   current = index;
-
 }
 
 function nextSlide() {
-
-  showSlide(
-    (current + 1) % slides.length
-  );
-
+  showSlide((current + 1) % slides.length);
 }
 
-let interval =
-  setInterval(
-    nextSlide,
-    4500
-  );
+let interval = setInterval(nextSlide, 4500);
 
 dots.forEach((dot, i) => {
-
   dot.onclick = () => {
-
     clearInterval(interval);
 
     showSlide(i);
 
-    interval =
-      setInterval(
-        nextSlide,
-        4500
-      );
-
+    interval = setInterval(nextSlide, 4500);
   };
-
 });
 
 let startX = 0;
 
-const slider =
-  document.getElementById(
-    "slider"
-  );
+const slider = document.getElementById("slider");
 
 slider.addEventListener(
   "touchstart",
   e => {
-
-    startX =
-      e.touches[0].clientX;
-
+    startX = e.touches[0].clientX;
   }
 );
 
 slider.addEventListener(
   "touchend",
   e => {
+    const endX = e.changedTouches[0].clientX;
 
-    const endX =
-      e.changedTouches[0].clientX;
-
-    const delta =
-      endX - startX;
+    const delta = endX - startX;
 
     if (Math.abs(delta) < 40) {
-
       return;
-
     }
 
     clearInterval(interval);
 
     if (delta < 0) {
-
       showSlide(
         (current + 1) % slides.length
       );
-
-    }
-    else {
-
+    } else {
       showSlide(
         (current - 1 + slides.length) % slides.length
       );
-
     }
 
-    interval =
-      setInterval(
-        nextSlide,
-        4500
-      );
-
+    interval = setInterval(nextSlide, 4500);
   }
 );
-const canvas =
-  document.getElementById(
-    "confetti"
-  );
 
-const ctx =
-  canvas.getContext("2d");
+const canvas = document.getElementById("confetti");
+
+const ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
-
-  canvas.width =
-    window.innerWidth;
-
-  canvas.height =
-    window.innerHeight;
-
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
 resizeCanvas();
@@ -209,17 +147,13 @@ window.addEventListener(
 const pieces = [];
 
 for (let i = 0; i < 180; i++) {
-
   pieces.push({
-
     x: Math.random() * canvas.width,
-
     y: Math.random() * -canvas.height,
 
     r: Math.random() * 6 + 3,
 
     vx: (Math.random() - .5) * 3,
-
     vy: Math.random() * 3 + 2,
 
     rot: Math.random() * 360,
@@ -227,25 +161,17 @@ for (let i = 0; i < 180; i++) {
     vr: (Math.random() - .5) * 10,
 
     shape: Math.random() > .5 ? "rect" : "circle"
-
   });
-
 }
 
 let confettiRunning = true;
 
 function drawPiece(p) {
-
   ctx.save();
 
-  ctx.translate(
-    p.x,
-    p.y
-  );
+  ctx.translate(p.x, p.y);
 
-  ctx.rotate(
-    p.rot * Math.PI / 180
-  );
+  ctx.rotate(p.rot * Math.PI / 180);
 
   const palette = [
     "#184c89",
@@ -255,27 +181,20 @@ function drawPiece(p) {
     "#efc75e"
   ];
 
-  ctx.fillStyle =
-    palette[
+  ctx.fillStyle = palette[
     Math.floor(
-      (Math.abs(
-        p.x + p.y
-      )) % palette.length
+      (Math.abs(p.x + p.y)) % palette.length
     )
-    ];
+  ];
 
   if (p.shape === "rect") {
-
     ctx.fillRect(
       -p.r / 2,
       -p.r / 2,
       p.r,
       p.r * 1.6
     );
-
-  }
-  else {
-
+  } else {
     ctx.beginPath();
 
     ctx.arc(
@@ -287,15 +206,12 @@ function drawPiece(p) {
     );
 
     ctx.fill();
-
   }
 
   ctx.restore();
-
 }
 
 function animateConfetti() {
-
   ctx.clearRect(
     0,
     0,
@@ -304,245 +220,138 @@ function animateConfetti() {
   );
 
   if (confettiRunning) {
-
     for (const p of pieces) {
-
       p.x += p.vx;
-
       p.y += p.vy;
 
       p.rot += p.vr;
 
       drawPiece(p);
-
     }
-
   }
 
-  requestAnimationFrame(
-    animateConfetti
-  );
-
+  requestAnimationFrame(animateConfetti);
 }
 
 animateConfetti();
 
 setTimeout(() => {
-
   confettiRunning = false;
-
 }, 2200);
 
-document.querySelectorAll(
-  ".btn"
-).forEach(btn => {
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    pieces.forEach(p => {
+      p.x = Math.random() * canvas.width;
+      p.y = Math.random() * -100;
 
-  btn.addEventListener(
-    "click",
-    () => {
-
-      pieces.forEach(p => {
-
-        p.x = Math.random() * canvas.width;
-
-        p.y = Math.random() * -100;
-
-        p.vy = Math.random() * 5 + 3;
-
-      });
-
-      confettiRunning = true;
-
-      setTimeout(() => {
-
-        confettiRunning = false;
-
-      }, 1800);
-
+      p.vy = Math.random() * 5 + 3;
     });
 
+    confettiRunning = true;
+
+    setTimeout(() => {
+      confettiRunning = false;
+    }, 1800);
+  });
 });
 
 function fadeInObserver() {
-
-  const observer =
-    new IntersectionObserver(
-
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            entry.target.animate(
-
-              [
-
-                {
-
-                  opacity: 0,
-
-                  transform:
-                    "translateY(40px)"
-
-                },
-
-                {
-
-                  opacity: 1,
-
-                  transform:
-                    "translateY(0px)"
-
-                }
-
-              ],
-
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.animate(
+            [
               {
-
-                duration: 700,
-
-                fill: "forwards",
-
-                easing:
-                  "ease-out"
-
+                opacity: 0,
+                transform: "translateY(40px)",
+              },
+              {
+                opacity: 1,
+                transform: "translateY(0px)",
               }
+            ],
+            {
+              duration: 700,
+              fill: "forwards",
+              easing: "ease-out",
+            }
+          );
 
-            );
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-
-      {
-
-        threshold: .15
-
-      }
-
-    );
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: .15
+    }
+  );
 
   document.querySelectorAll(
-  ".section-title,.detail,.time-box"
-).forEach(el => {
-
+    ".section-title,.detail,.time-box"
+  ).forEach(el => {
     el.style.opacity = 0;
 
     observer.observe(el);
-
   });
-
 }
 
 fadeInObserver();
 
 function createSparkle(x, y) {
+  const sparkle = document.createElement("div");
 
-  const sparkle =
-    document.createElement(
-      "div"
-    );
+  sparkle.style.position = "fixed";
 
-  sparkle.style.position =
-    "fixed";
+  sparkle.style.left = x + "px";
 
-  sparkle.style.left =
-    x + "px";
+  sparkle.style.top = y + "px";
 
-  sparkle.style.top =
-    y + "px";
+  sparkle.style.width = "8px";
 
-  sparkle.style.width =
-    "8px";
+  sparkle.style.height = "8px";
 
-  sparkle.style.height =
-    "8px";
+  sparkle.style.borderRadius = "50%";
 
-  sparkle.style.borderRadius =
-    "50%";
+  sparkle.style.pointerEvents = "none";
 
-  sparkle.style.pointerEvents =
-    "none";
+  sparkle.style.background = "#d9b44a";
 
-  sparkle.style.background =
-    "#d9b44a";
+  sparkle.style.boxShadow = "0 0 12px #d9b44a";
 
-  sparkle.style.boxShadow =
-    "0 0 12px #d9b44a";
+  sparkle.style.zIndex = "9999";
 
-  sparkle.style.zIndex =
-    "9999";
-
-  document.body.appendChild(
-    sparkle
-  );
+  document.body.appendChild(sparkle);
 
   sparkle.animate(
-
     [
-
       {
-
-        transform:
-          "scale(0)",
-
+        transform: "scale(0)",
         opacity: 1
-
       },
-
       {
-
-        transform:
-          "scale(2)",
-
+        transform: "scale(2)",
         opacity: 0
-
       }
-
     ],
-
     {
-
       duration: 700,
-
       easing: "ease-out"
-
     }
-
   ).onfinish = () => {
-
     sparkle.remove();
-
   };
-
 }
 
 window.addEventListener(
-
   "pointerdown",
-
   e => {
-
-    createSparkle(
-
-      e.clientX,
-
-      e.clientY
-
-    );
-
+    createSparkle(e.clientX, e.clientY);
   }
-
 );
-function addFloatingBackground() {
 
+function addFloatingBackground() {
   const wrapper = document.createElement("div");
 
   wrapper.style.position = "fixed";
@@ -554,7 +363,6 @@ function addFloatingBackground() {
   document.body.prepend(wrapper);
 
   for (let i = 0; i < 25; i++) {
-
     const circle = document.createElement("div");
 
     const size = 40 + Math.random() * 180;
@@ -566,21 +374,15 @@ function addFloatingBackground() {
 
     circle.style.opacity = ".05";
 
-    circle.style.background =
-      Math.random() > .5
-        ?
-        "#184c89"
-        :
-        "#d9b44a";
+    circle.style.background = Math.random() > .5
+      ? "#184c89"
+      : "#d9b44a";
 
-    circle.style.left =
-      Math.random() * 100 + "vw";
+    circle.style.left = Math.random() * 100 + "vw";
 
-    circle.style.top =
-      Math.random() * 100 + "vh";
+    circle.style.top = Math.random() * 100 + "vh";
 
     circle.animate(
-
       [
         {
           transform:
@@ -592,27 +394,21 @@ function addFloatingBackground() {
 translateX(${Math.random() * 80 - 40}px)`
         }
       ],
-
       {
-        duration:
-          8000 + Math.random() * 12000,
+        duration: 8000 + Math.random() * 12000,
         iterations: Infinity,
         direction: "alternate",
         easing: "ease-in-out"
       }
-
     );
 
     wrapper.appendChild(circle);
-
   }
-
 }
 
 addFloatingBackground();
 
 function highlightCountdown() {
-
   const boxes = [
     ...document.querySelectorAll(
       ".time-box"
@@ -620,11 +416,8 @@ function highlightCountdown() {
   ];
 
   setInterval(() => {
-
     boxes.forEach(box => {
-
       box.animate(
-
         [
           {
             transform: "scale(1)"
@@ -636,17 +429,12 @@ function highlightCountdown() {
             transform: "scale(1)"
           }
         ],
-
         {
           duration: 350
         }
-
       );
-
     });
-
   }, 1000);
-
 }
 
 highlightCountdown();
@@ -654,13 +442,10 @@ highlightCountdown();
 document.querySelectorAll(
   ".name"
 ).forEach(card => {
-
   card.addEventListener(
     "mouseenter",
     () => {
-
       card.animate(
-
         [
           {
             transform: "translateY(0px)"
@@ -672,21 +457,17 @@ document.querySelectorAll(
             transform: "translateY(0px)"
           }
         ],
-
         {
           duration: 350
         }
-
       );
-
-    });
+    }
+  );
 
   card.addEventListener(
     "touchstart",
     () => {
-
       card.animate(
-
         [
           {
             transform: "scale(1)"
@@ -698,32 +479,23 @@ document.querySelectorAll(
             transform: "scale(1)"
           }
         ],
-
         {
           duration: 250
         }
-
       );
-
     },
     {
       passive: true
     }
   );
-
 });
 
-const heroCard =
-  document.querySelector(
-    ".hero-card"
-  );
+const heroCard = document.querySelector(".hero-card");
 
 window.addEventListener(
   "scroll",
   () => {
-
-    const y =
-      window.scrollY;
+    const y = window.scrollY;
 
     heroCard.style.transform =
       `translateY(${y * 0.08}px)`;
@@ -733,7 +505,6 @@ window.addEventListener(
         1 - y / 700,
         0
       );
-
   });
 
 const revealElements = [
@@ -743,37 +514,23 @@ const revealElements = [
 ];
 
 revealElements.forEach(el => {
-
-  el.style.transition =
-    "transform .7s ease, opacity .7s ease";
-
+  el.style.transition = "transform .7s ease, opacity .7s ease";
 });
 
 function revealOnScroll() {
-
-  const trigger =
-    window.innerHeight * 0.88;
+  const trigger = window.innerHeight * 0.88;
 
   revealElements.forEach(el => {
-
-    const rect =
-      el.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
 
     if (rect.top < trigger) {
-
       el.style.opacity = "1";
       el.style.transform = "translateY(0px)";
-
-    }
-    else {
-
+    } else {
       el.style.opacity = ".01";
       el.style.transform = "translateY(40px)";
-
     }
-
   });
-
 }
 
 window.addEventListener(
@@ -789,13 +546,10 @@ window.addEventListener(
 document.querySelectorAll(
   ".btn"
 ).forEach(btn => {
-
   btn.addEventListener(
     "pointerdown",
     () => {
-
       btn.animate(
-
         [
           {
             transform: "scale(1)"
@@ -807,59 +561,39 @@ document.querySelectorAll(
             transform: "scale(1)"
           }
         ],
-
         {
           duration: 180
         }
-
       );
-
     });
-
 });
 
 const title = document.querySelector("h1");
 
-const originalTitle =
-  title.textContent;
+const originalTitle = title.textContent;
 
 title.textContent = "";
 
 let index = 0;
 
 function typeTitle() {
-
-  if (index >
-    originalTitle.length) {
-
+  if (index > originalTitle.length) {
     return;
-
   }
 
-  title.textContent =
-    originalTitle.substring(
-      0,
-      index
-    );
+  title.textContent = originalTitle.substring(0, index);
 
   index++;
 
-  setTimeout(
-    typeTitle,
-    90
-  );
+  setTimeout(typeTitle, 90);
 
 }
 
 typeTitle();
 
-const year =
-  document.querySelector(
-    ".year"
-  );
+const year = document.querySelector(".year");
 
 year.animate(
-
   [
     {
       opacity: 0,
@@ -872,27 +606,21 @@ year.animate(
         "translateY(0)"
     }
   ],
-
   {
     delay: 900,
     duration: 700,
     fill: "forwards"
   }
-
 );
 
 function smoothPulse() {
-
   const buttons = [
     ...document.querySelectorAll(".btn")
   ];
 
   setInterval(() => {
-
     buttons.forEach(btn => {
-
       btn.animate(
-
         [
           {
             transform: "scale(1)"
@@ -904,55 +632,32 @@ function smoothPulse() {
             transform: "scale(1)"
           }
         ],
-
         {
           duration: 700,
           easing: "ease-in-out"
         }
-
       );
-
     });
-
   }, 7000);
-
 }
 
 smoothPulse();
 
 document.addEventListener(
-
   "visibilitychange",
-
   () => {
-
     if (document.hidden) {
-
       clearInterval(interval);
-
-    }
-    else {
-
+    } else {
       clearInterval(interval);
-
-      interval = setInterval(
-
-        nextSlide,
-
-        4500
-
-      );
-
+      interval = setInterval(nextSlide, 4500);
     }
-
   }
-
 );
 
 const footer = document.querySelector("footer");
 
 footer.animate(
-
   [
     {
       opacity: 0,
@@ -963,13 +668,11 @@ footer.animate(
       transform: "translateY(0px)"
     }
   ],
-
   {
     duration: 1000,
     delay: 1200,
     fill: "forwards"
   }
-
 );
 
 console.log(
@@ -983,83 +686,52 @@ console.log(
 );
 
 const numbers = {
-
   carolina: "5551997536161",
-
   felipe: "5551981968251",
-
   mateus: "5551984564510",
-
   paola: "5551991149626"
-
 };
 
 const names = {
-
   carolina: "Carolina",
-
   felipe: "Felipe",
-
   mateus: "Mateus",
-
   paola: "Paola"
-
 };
 
-const rsvpButton =
-document.getElementById("rsvpButton");
+const rsvpButton = document.getElementById("rsvpButton");
 
-const rsvpOptions =
-document.getElementById("rsvpOptions");
+const rsvpOptions = document.getElementById("rsvpOptions");
 
-if(rsvpButton && rsvpOptions){
-
+if (rsvpButton && rsvpOptions) {
   rsvpButton.addEventListener(
-
     "click",
-
-    ()=>{
-
-      rsvpButton.style.display="none";
-
+    () => {
+      rsvpButton.style.display = "none";
       rsvpOptions.classList.add("open");
-
     }
-
   );
-
 }
 
-document
-.querySelectorAll(".rsvp-option")
-.forEach(button=>{
+document.querySelectorAll(".rsvp-option")
+  .forEach(button => {
+    button.addEventListener(
+      "click",
+      () => {
+        const person = button.dataset.person;
 
-  button.addEventListener(
-
-    "click",
-
-    ()=>{
-
-      const person=
-      button.dataset.person;
-
-      const msg=
+        const msg =
 `Olá, ${names[person]}!
 
 Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30.
 
 Nos vemos lá!`;
 
-      window.open(
-  "https://wa.me/" +
-  numbers[person] +
-  "?text=" +
-  encodeURIComponent(msg),
-  "_blank"
-);
-
-    }
-
-  );
-
-});
+        window.open("https://wa.me/"
+          + numbers[person]
+          + "?text="
+          + encodeURIComponent(msg),
+          "_blank");
+      }
+    );
+  });
