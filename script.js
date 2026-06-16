@@ -880,51 +880,6 @@ year.animate(
   }
 
 );
-function autoHideFloatingBar() {
-
-  const bar = document.querySelector(".floating");
-
-  let lastScroll = 0;
-
-  window.addEventListener(
-
-    "scroll",
-
-    () => {
-
-      const current = window.scrollY;
-
-      if (current < 80) {
-
-        bar.style.transform =
-          "translateX(-50%) translateY(0px)";
-
-        lastScroll = current;
-        return;
-
-      }
-
-      if (current > lastScroll) {
-
-        bar.style.transform =
-          "translateX(-50%) translateY(120px)";
-      }
-      else {
-
-        bar.style.transform =
-          "translateX(-50%) translateY(0px)";
-
-      }
-
-      lastScroll = current;
-
-    }
-
-  );
-
-}
-
-autoHideFloatingBar();
 
 function smoothPulse() {
 
@@ -1028,68 +983,81 @@ console.log(
 );
 
 const numbers = {
+
   carolina: "5551997536161",
+
   felipe: "5551981968251",
+
   mateus: "5551984564510",
+
   paola: "5551991149626"
+
 };
 
-function openRsvpSelector() {
+const names = {
 
-  document.getElementById("rsvpContainer").style.display = "block";
+  carolina: "Carolina",
 
-  document.getElementById("graduateSelect").focus();
+  felipe: "Felipe",
 
-}
+  mateus: "Mateus",
 
-const mainButton =
-  document.getElementById("rsvpButton");
+  paola: "Paola"
 
-if (mainButton) {
+};
 
-  mainButton.addEventListener(
+const rsvpButton =
+document.getElementById("rsvpButton");
+
+const rsvpOptions =
+document.getElementById("rsvpOptions");
+
+if(rsvpButton && rsvpOptions){
+
+  rsvpButton.addEventListener(
+
     "click",
-    openRsvpSelector
-  );
 
-}
+    ()=>{
 
-const floatingButton =
-  document.getElementById("floatingRsvpButton");
+      rsvpButton.style.display="none";
 
-if (floatingButton) {
+      rsvpOptions.classList.add("open");
 
-  floatingButton.addEventListener(
-    "click",
-    openRsvpSelector
+    }
+
   );
 
 }
 
 document
-  .getElementById("graduateSelect")
-  .addEventListener(
-    "change",
-    function () {
+.querySelectorAll(".rsvp-option")
+.forEach(button=>{
 
-      if (!this.value) return;
+  button.addEventListener(
 
-      const name =
-        this.options[this.selectedIndex].text;
+    "click",
 
-      const msg =
-`Olá, ${name}!
+    ()=>{
 
-Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30.
+      const person=
+      button.dataset.person;
+
+      const msg=
+`Olá, ${names[person]}! 😊
+
+Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30. 🎓✨
 
 Nos vemos lá!`;
 
-      window.location.href =
-        "https://wa.me/" +
-        numbers[this.value] +
-        "?text=" +
-        encodeURIComponent(msg);
+      window.location.href=
+      "https://wa.me/"
+      +numbers[person]
+      +"?text="
+      +encodeURIComponent(msg);
 
     }
+
   );
-  
+
+});

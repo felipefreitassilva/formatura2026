@@ -96,23 +96,18 @@
       </div>
 
       <div class="slider" id="slider">
-
-        <div class="slide active"
-          style="background-image:url('https://picsum.photos/900/1200?random=1');">
+        
+        <div class="slide" style="background-image:url('./assets/1648752181.jpg');">
         </div>
 
-        <div class="slide"
-          style="background-image:url('https://picsum.photos/900/1200?random=2');">
+        <div class="slide active" style="background-image:url('./assets/1648750568.jpg');">
         </div>
 
-        <div class="slide"
-          style="background-image:url('https://picsum.photos/900/1200?random=3');">
+        <div class="slide" style="background-image:url('./assets/carol_paola.jpeg');">
         </div>
 
-        <div class="slide"
-          style="background-image:url('https://picsum.photos/900/1200?random=4');">
+        <div class="slide" style="background-image:url('./assets/mateus_felipe.jpg');">
         </div>
-
       </div>
 
       <div class="dots">
@@ -160,82 +155,69 @@
 
       <div class="actions">
 
-        <a
-          class="btn btn-primary"
-          target="_blank"
+        <a class="btn btn-primary" target="_blank"
           href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
 
           📍 Como chegar
 
         </a>
 
-        <button
-          class="btn btn-secondary"
-          id="rsvpButton"
-          type="button">
+        <div id="rsvpArea" class="rsvp-area">
 
-          🎉 Confirmar presença
+  <button
+    class="btn btn-secondary"
+    id="rsvpButton"
+    type="button">
 
-        </button>
+    🎉 Confirmar presença
 
-      </div>
+  </button>
 
-      <div
-        id="rsvpContainer"
-        style="display:none;margin-top:20px;">
+  <div
+    id="rsvpOptions"
+    class="rsvp-options">
 
-        <select
-          id="graduateSelect"
-          style="width:100%;padding:14px;font-size:1rem;">
+    <button
+      class="rsvp-option"
+      data-person="carolina">
 
-          <option value="">
-            Escolha um formando
-          </option>
+      👩 Carolina
 
-          <option value="carolina">
-            Carolina
-          </option>
+    </button>
 
-          <option value="felipe">
-            Felipe
-          </option>
+    <button
+      class="rsvp-option"
+      data-person="felipe">
 
-          <option value="mateus">
-            Mateus
-          </option>
+      👨 Felipe
 
-          <option value="paola">
-            Paola
-          </option>
+    </button>
 
-        </select>
+    <button
+      class="rsvp-option"
+      data-person="mateus">
+
+      👨 Mateus
+
+    </button>
+
+    <button
+      class="rsvp-option"
+      data-person="paola">
+
+      👩 Paola
+
+    </button>
+
+  </div>
+
+</div>
 
       </div>
 
     </div>
 
   </section>
-
-  <div class="floating">
-
-    <a
-      target="_blank"
-      href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
-
-      📍 Maps
-
-    </a>
-
-    <button
-      class="btn btn-secondary"
-      id="floatingRsvpButton"
-      type="button">
-
-      🎉 RSVP
-
-    </button>
-
-  </div>
 
   <footer>
 

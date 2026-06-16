@@ -94,28 +94,6 @@
 
     }
 
-    .hero::after {
-
-      content: "";
-
-      position: absolute;
-
-      width: 700px;
-      height: 700px;
-
-      border-radius: 50%;
-
-      background:
-
-        radial-gradient(circle,
-          rgba(24, 76, 137, .10),
-          transparent 70%);
-
-      bottom: -350px;
-      left: -250px;
-
-    }
-
     .hero-card {
 
       position: relative;
@@ -465,56 +443,6 @@
 
     }
 
-    .floating {
-
-      position: fixed;
-
-      left: 50%;
-
-      bottom: 18px;
-
-      transform: translateX(-50%);
-
-      background: white;
-
-      box-shadow: var(--shadow);
-
-      border-radius: 999px;
-
-      padding: 8px;
-
-      display: flex;
-
-      gap: 8px;
-
-      z-index: 500;
-
-    }
-
-    .floating a {
-
-      padding: 12px 18px;
-
-      border-radius: 999px;
-
-      font-weight: 700;
-
-    }
-
-    .floating a:first-child {
-
-      background: var(--blue);
-      color: white;
-
-    }
-
-    .floating a:last-child {
-
-      background: var(--gold);
-      color: white;
-
-    }
-
     footer {
 
       padding: 80px 20px 120px;
@@ -594,4 +522,77 @@
 
       }
 
-    }
+    }.rsvp-area{
+
+flex:1;
+
+position:relative;
+
+}
+
+.rsvp-options{display:none;}
+.rsvp-options.open{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:10px;
+
+max-height:0;
+
+overflow:hidden;
+
+opacity:0;
+
+transition:
+max-height .35s ease,
+opacity .25s ease;
+
+}
+
+.rsvp-options.open{
+
+max-height:300px;
+
+opacity:1;
+
+}
+
+.rsvp-option{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:18px;
+
+font:inherit;
+
+font-weight:600;
+
+cursor:pointer;
+
+background:white;
+
+color:var(--blue);
+
+box-shadow:var(--shadow);
+
+transition:.2s;
+
+}
+
+.rsvp-option:hover{
+
+transform:translateY(-2px);
+
+}
+
+.rsvp-option:active{
+
+transform:scale(.98);
+
+}
