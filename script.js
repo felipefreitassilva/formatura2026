@@ -1044,17 +1044,19 @@ document
       button.dataset.person;
 
       const msg=
-`Olá, ${names[person]}! 😊
+`Olá, ${names[person]}!
 
-Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30. 🎓✨
+Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30.
 
 Nos vemos lá!`;
 
-      window.location.href=
-      "https://wa.me/"
-      +numbers[person]
-      +"?text="
-      +encodeURIComponent(msg);
+      window.open(
+  "https://wa.me/" +
+  numbers[person] +
+  "?text=" +
+  encodeURIComponent(msg),
+  "_blank"
+);
 
     }
 
