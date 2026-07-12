@@ -9,7 +9,7 @@
 
   <meta name="description" content="🎓 Vem celebrar com a gente! Formatura 2026 • 14 de agosto • 21h30 • British Club">
 
-  <meta name="theme-color" content="#0b2342">
+  <meta name="theme-color" content="#0a0c24">
 
   <link rel="icon" type="image/x-icon" href="./assets/1648752181.ico">
   <link rel="shortcut icon" href="./assets/1648752181.ico">
@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
 
   <link rel="stylesheet" href="style.css">
 
@@ -44,13 +44,14 @@
   <canvas id="confetti"></canvas>
 
   <section class="hero">
-    <div class="hero-card">
-      <div class="invite">
-        ✨ Vem celebrar com a gente
+    <div class="hero-card pixel-panel">
+      <div class="hud-row">
+        <div class="hud-lives" aria-hidden="true">❤️❤️❤️</div>
+        <div class="hud-coin" aria-hidden="true">🪙</div>
       </div>
 
-      <div class="hero-names">
-        Carolina · Felipe · Mateus · Paola
+      <div class="invite">
+        ✨ VEM CELEBRAR COM A GENTE
       </div>
 
       <h1>
@@ -61,39 +62,50 @@
         2026
       </div>
 
+      <div class="pixel-divider" aria-hidden="true">
+        <span></span>
+        <span class="pixel-divider-icon">🎓</span>
+        <span></span>
+      </div>
+
+      <div class="hero-names">
+        Carolina · Felipe · Mateus · Paola
+      </div>
       <div class="tagline">
         Uma noite especial merece pessoas especiais.<br>Esperamos você para comemorar esta conquista!
       </div>
 
       <button class="scroll-indicator" id="scrollIndicator" type="button">
-        ↓ role para começar ↓
+        ↓ ROLE PARA COMEÇAR ↓
       </button>
     </div>
   </section>
 
+  <div class="skyline" aria-hidden="true"></div>
+
   <section id="countdown-section">
     <div class="container">
       <div class="section-title">
-        ⏳ Contagem Regressiva
+        <span class="section-title-tag">QUEST</span> ⏳ Contagem Regressiva
       </div>
 
       <div class="countdown">
-        <div class="time-box">
+        <div class="time-box pixel-panel">
           <div id="days" class="time-value">--</div>
           <div class="time-label">Dias</div>
         </div>
 
-        <div class="time-box">
+        <div class="time-box pixel-panel">
           <div id="hours" class="time-value">--</div>
           <div class="time-label">Horas</div>
         </div>
 
-        <div class="time-box">
+        <div class="time-box pixel-panel">
           <div id="minutes" class="time-value">--</div>
           <div class="time-label">Min</div>
         </div>
 
-        <div class="time-box">
+        <div class="time-box pixel-panel">
           <div id="seconds" class="time-value">--</div>
           <div class="time-label">Seg</div>
         </div>
@@ -104,10 +116,12 @@
   <section>
     <div class="container">
       <div class="section-title">
-        📸 Nossos Momentos
+        <span class="section-title-tag">SAVE</span> 📸 Nossos Momentos
       </div>
 
-      <div class="slider" id="slider"></div>
+      <div class="slider-frame pixel-panel">
+        <div class="slider" id="slider"></div>
+      </div>
 
       <div class="dots" id="dots"></div>
     </div>
@@ -116,57 +130,64 @@
   <section>
     <div class="container">
       <div class="section-title">
-        📅 Informações
+        <span class="section-title-tag">INFO</span> 📅 Informações
       </div>
 
       <div class="details">
-        <div class="detail">
-          <h3>Data</h3>
+        <div class="detail pixel-panel">
+          <h3>📅 Data &amp; Horário</h3>
           <p>14 de agosto de 2026</p>
-        </div>
-
-        <div class="detail">
-          <h3>Horário</h3>
           <p>21h30</p>
         </div>
 
-        <div class="detail">
-          <h3>Local</h3>
+        <div class="detail pixel-panel">
+          <h3>📍 Local</h3>
           <p>British Club</p>
+          <p class="detail-address">R. Furriel Luiz Antonio de Vargas, 400</p>
+
+          <a class="btn btn-primary detail-btn" target="_blank" rel="noopener noreferrer"
+            href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
+            📍 COMO CHEGAR
+          </a>
         </div>
 
-        <div class="detail">
-          <h3>Endereço</h3>
-          <p>R. Furriel Luiz Antonio de Vargas, 400</p>
+        <!-- Cardápio ainda não existe. Quando tiver o link/arquivo,
+             é só remover este comentário e preencher o href abaixo. -->
+        <!--
+        <div class="detail pixel-panel">
+          <h3>🍽️ Cardápio</h3>
+          <p>Confira o menu da noite</p>
+
+          <a class="btn btn-primary detail-btn" target="_blank" rel="noopener noreferrer" href="#">
+            🍽️ VER CARDÁPIO
+          </a>
         </div>
+        -->
       </div>
 
       <div class="actions">
-        <a class="btn btn-primary" target="_blank"
-          href="https://www.google.com/maps/search/?api=1&query=British+Club+R.+Furriel+Luiz+Antonio+de+Vargas+400">
-          📍 Como chegar
-        </a>
-
         <div id="rsvpArea" class="rsvp-area">
           <button class="btn btn-secondary" id="rsvpButton" type="button">
-            🎉 Confirmar presença
+            🎉 CONFIRMAR PRESENÇA
           </button>
+
+          <p id="rsvpTitle" class="rsvp-title">👇 QUEM TE CONVIDOU?</p>
 
           <div id="rsvpOptions" class="rsvp-options">
             <button class="rsvp-option" data-person="carolina">
-              👩 Carolina
+              👩 CAROLINA
             </button>
 
             <button class="rsvp-option" data-person="felipe">
-              👨 Felipe
+              👨 FELIPE
             </button>
 
             <button class="rsvp-option" data-person="mateus">
-              👨 Mateus
+              👨 MATEUS
             </button>
 
             <button class="rsvp-option" data-person="paola">
-              👩 Paola
+              👩 PAOLA
             </button>
           </div>
         </div>
@@ -174,8 +195,23 @@
     </div>
   </section>
 
+  <section>
+    <div class="container">
+      <!-- Clique na imagem para trocar qual foto fica em primeiro plano. -->
+      <div class="reveal-frame pixel-panel" id="revealFrame">
+        <img class="reveal-img reveal-img--real reveal-bg" src="./assets/banner.jpg" alt="Foto real do grupo">
+        <img class="reveal-img reveal-img--pixel reveal-fg" src="./assets/banner_16bit.png" alt="Versão pixelada do grupo">
+        <div class="reveal-cursor-dot" aria-hidden="true"></div>
+      </div>
+
+      <p class="reveal-hint">👆 Passe o mouse para revelar • clique para trocar</p>
+    </div>
+  </section>
+
   <footer>
-    Esperamos você para celebrar conosco! 🎓✨
+    <div class="footer-panel pixel-panel">
+      ESPERAMOS VOCÊ PARA CELEBRAR CONOSCO! 🎓✨
+    </div>
   </footer>
 </body>
 

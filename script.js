@@ -427,18 +427,19 @@ function addFloatingBackground() {
   for (let i = 0; i < count; i++) {
     const circle = document.createElement("div");
 
-    const size = 40 + Math.random() * 180;
+    const size = 6 + Math.random() * 16;
 
     circle.style.position = "absolute";
     circle.style.width = size + "px";
     circle.style.height = size + "px";
-    circle.style.borderRadius = "50%";
+    circle.style.borderRadius = "0";
 
-    circle.style.opacity = ".05";
+    circle.style.opacity = ".18";
 
-    circle.style.background = Math.random() > .5
-      ? "#184c89"
-      : "#d9b44a";
+    const palette = ["#4fd8f0", "#f4c430", "#6a4fd6"];
+
+    circle.style.background =
+      palette[Math.floor(Math.random() * palette.length)];
 
     circle.style.left = Math.random() * 100 + "vw";
     circle.style.top = Math.random() * 100 + "vh";
@@ -575,31 +576,6 @@ window.addEventListener(
   revealOnScroll
 );
 
-document.querySelectorAll(
-  ".btn"
-).forEach(btn => {
-  btn.addEventListener(
-    "pointerdown",
-    () => {
-      btn.animate(
-        [
-          {
-            transform: "scale(1)"
-          },
-          {
-            transform: "scale(.95)"
-          },
-          {
-            transform: "scale(1)"
-          }
-        ],
-        {
-          duration: 180
-        }
-      );
-    });
-});
-
 const title = document.querySelector("h1");
 
 const originalTitle = title.textContent;
@@ -675,6 +651,60 @@ function smoothPulse() {
 
 smoothPulse();
 
+const revealFrame = document.getElementById("revealFrame");
+
+function setRevealPosition(clientX, clientY) {
+  const rect = revealFrame.getBoundingClientRect();
+
+  const x = ((clientX - rect.left) / rect.width) * 100;
+  const y = ((clientY - rect.top) / rect.height) * 100;
+
+  revealFrame.style.setProperty("--reveal-x", x + "%");
+  revealFrame.style.setProperty("--reveal-y", y + "%");
+}
+
+if (revealFrame) {
+  revealFrame.addEventListener("mouseenter", () => {
+    revealFrame.classList.add("reveal-active");
+  });
+
+  revealFrame.addEventListener("mousemove", e => {
+    setRevealPosition(e.clientX, e.clientY);
+  });
+
+  revealFrame.addEventListener("mouseleave", () => {
+    revealFrame.classList.remove("reveal-active");
+  });
+
+  revealFrame.addEventListener(
+    "touchstart",
+    e => {
+      revealFrame.classList.add("reveal-active");
+      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY);
+    },
+    { passive: true }
+  );
+
+  revealFrame.addEventListener(
+    "touchmove",
+    e => {
+      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY);
+    },
+    { passive: true }
+  );
+
+  revealFrame.addEventListener("touchend", () => {
+    revealFrame.classList.remove("reveal-active");
+  });
+
+  revealFrame.addEventListener("click", () => {
+    revealFrame.querySelectorAll(".reveal-img").forEach(img => {
+      img.classList.toggle("reveal-fg");
+      img.classList.toggle("reveal-bg");
+    });
+  });
+}
+
 document.addEventListener(
   "visibilitychange",
   () => {
@@ -737,11 +767,18 @@ const rsvpButton = document.getElementById("rsvpButton");
 
 const rsvpOptions = document.getElementById("rsvpOptions");
 
+const rsvpTitle = document.getElementById("rsvpTitle");
+
 if (rsvpButton && rsvpOptions) {
   rsvpButton.addEventListener(
     "click",
     () => {
       rsvpButton.style.display = "none";
+
+      if (rsvpTitle) {
+        rsvpTitle.classList.add("open");
+      }
+
       rsvpOptions.classList.add("open");
     }
   );
@@ -765,7 +802,8 @@ Nos vemos lá!`;
           + numbers[person]
           + "?text="
           + encodeURIComponent(msg),
-          "_blank");
+          "_blank",
+          "noopener,noreferrer");
       }
     );
   });
