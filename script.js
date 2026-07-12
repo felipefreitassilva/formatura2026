@@ -1,6 +1,59 @@
+const scrollIndicator = document.getElementById("scrollIndicator");
+const countdownSection = document.getElementById("countdown-section");
+
+if (scrollIndicator && countdownSection) {
+  scrollIndicator.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    countdownSection.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth"
+    });
+  });
+}
+
 const targetDate = new Date(
   "2026-08-14T21:30:00"
 );
+
+const previousCountdownValues = {
+  days: null,
+  hours: null,
+  minutes: null,
+  seconds: null
+};
+
+function pulseBox(id) {
+  const box = document.getElementById(id).closest(".time-box");
+
+  if (!box) {
+    return;
+  }
+
+  box.animate(
+    [
+      { transform: "scale(1)" },
+      { transform: "scale(1.04)" },
+      { transform: "scale(1)" }
+    ],
+    { duration: 350 }
+  );
+}
+
+function setCountdownValue(id, value) {
+  const el = document.getElementById(id);
+
+  if (el.textContent !== value) {
+    el.textContent = value;
+
+    if (previousCountdownValues[id] !== null) {
+      pulseBox(id);
+    }
+
+    previousCountdownValues[id] = value;
+  }
+}
 
 function updateCountdown() {
   const now = new Date();
@@ -9,10 +62,10 @@ function updateCountdown() {
 
   if (diff <= 0) {
 
-    document.getElementById("days").textContent = "0";
-    document.getElementById("hours").textContent = "0";
-    document.getElementById("minutes").textContent = "0";
-    document.getElementById("seconds").textContent = "0";
+    setCountdownValue("days", "0");
+    setCountdownValue("hours", "0");
+    setCountdownValue("minutes", "0");
+    setCountdownValue("seconds", "0");
 
     return;
   }
@@ -27,16 +80,13 @@ function updateCountdown() {
 
   const secs = seconds % 60;
 
-  document.getElementById("days").textContent = days;
+  setCountdownValue("days", String(days));
 
-  document.getElementById("hours").textContent =
-    String(hours).padStart(2, "0");
+  setCountdownValue("hours", String(hours).padStart(2, "0"));
 
-  document.getElementById("minutes").textContent =
-    String(minutes).padStart(2, "0");
+  setCountdownValue("minutes", String(minutes).padStart(2, "0"));
 
-  document.getElementById("seconds").textContent =
-    String(secs).padStart(2, "0");
+  setCountdownValue("seconds", String(secs).padStart(2, "0"));
 }
 
 updateCountdown();
@@ -46,73 +96,130 @@ setInterval(
   1000
 );
 
-const slides = [
-  ...document.querySelectorAll(".slide")
+// Images shown here are used only if assets/assets.json can't be loaded
+// (e.g. previewing index.html locally without running the deploy workflow).
+// In production, the GitHub Actions workflow generates assets/assets.json
+// by scanning the assets/ folder, so adding/removing a photo there is
+// enough — no HTML/JS changes needed.
+const FALLBACK_IMAGES = [
+  "assets/1648752181.jpg",
+  "assets/carol_paola.jpeg",
+  "assets/mateus_felipe.jpg",
+  "assets/1648750568.jpg"
 ];
 
-const dots = [
-  ...document.querySelectorAll(".dot")
-];
+const sliderEl = document.getElementById("slider");
+const dotsEl = document.getElementById("dots");
 
+let slides = [];
+let dots = [];
 let current = 0;
+let interval = null;
 
 function showSlide(index) {
+  if (!slides.length) {
+    return;
+  }
+
   slides.forEach((s, i) => {
-    s.classList.toggle(
-      "active",
-      i === index
-    );
+    s.classList.toggle("active", i === index);
   });
 
   dots.forEach((d, i) => {
-    d.classList.toggle(
-      "active",
-      i === index
-    );
+    d.classList.toggle("active", i === index);
   });
 
   current = index;
 }
 
 function nextSlide() {
+  if (!slides.length) {
+    return;
+  }
+
   showSlide((current + 1) % slides.length);
 }
 
-let interval = setInterval(nextSlide, 4500);
+function startSlideshow() {
+  clearInterval(interval);
+  interval = setInterval(nextSlide, 4500);
+}
 
-dots.forEach((dot, i) => {
-  dot.onclick = () => {
-    clearInterval(interval);
+async function loadSliderImages() {
+  let images = FALLBACK_IMAGES;
 
-    showSlide(i);
+  try {
+    const res = await fetch("assets/assets.json");
 
-    interval = setInterval(nextSlide, 4500);
-  };
-});
+    if (res.ok) {
+      const list = await res.json();
+
+      if (Array.isArray(list) && list.length) {
+        images = list;
+      }
+    }
+  } catch (err) {
+    console.warn(
+      "Could not load assets/assets.json, using fallback image list.",
+      err
+    );
+  }
+
+  sliderEl.innerHTML = "";
+  dotsEl.innerHTML = "";
+
+  images.forEach((src, i) => {
+    const slide = document.createElement("div");
+
+    slide.className = "slide" + (i === 0 ? " active" : "");
+    slide.style.backgroundImage = `url('./${src}')`;
+
+    sliderEl.appendChild(slide);
+
+    const dot = document.createElement("div");
+
+    dot.className = "dot" + (i === 0 ? " active" : "");
+
+    dotsEl.appendChild(dot);
+  });
+
+  slides = [...sliderEl.querySelectorAll(".slide")];
+  dots = [...dotsEl.querySelectorAll(".dot")];
+  current = 0;
+
+  dots.forEach((dot, i) => {
+    dot.onclick = () => {
+      showSlide(i);
+      startSlideshow();
+    };
+  });
+
+  if (slides.length > 1) {
+    startSlideshow();
+  }
+}
+
+loadSliderImages();
 
 let startX = 0;
 
-const slider = document.getElementById("slider");
-
-slider.addEventListener(
+sliderEl.addEventListener(
   "touchstart",
   e => {
     startX = e.touches[0].clientX;
   }
 );
 
-slider.addEventListener(
+sliderEl.addEventListener(
   "touchend",
   e => {
     const endX = e.changedTouches[0].clientX;
 
     const delta = endX - startX;
 
-    if (Math.abs(delta) < 40) {
+    if (Math.abs(delta) < 40 || !slides.length) {
       return;
     }
-
-    clearInterval(interval);
 
     if (delta < 0) {
       showSlide(
@@ -124,9 +231,10 @@ slider.addEventListener(
       );
     }
 
-    interval = setInterval(nextSlide, 4500);
+    startSlideshow();
   }
 );
+
 
 const canvas = document.getElementById("confetti");
 
@@ -299,59 +407,11 @@ function fadeInObserver() {
 
 fadeInObserver();
 
-function createSparkle(x, y) {
-  const sparkle = document.createElement("div");
-
-  sparkle.style.position = "fixed";
-
-  sparkle.style.left = x + "px";
-
-  sparkle.style.top = y + "px";
-
-  sparkle.style.width = "8px";
-
-  sparkle.style.height = "8px";
-
-  sparkle.style.borderRadius = "50%";
-
-  sparkle.style.pointerEvents = "none";
-
-  sparkle.style.background = "#d9b44a";
-
-  sparkle.style.boxShadow = "0 0 12px #d9b44a";
-
-  sparkle.style.zIndex = "9999";
-
-  document.body.appendChild(sparkle);
-
-  sparkle.animate(
-    [
-      {
-        transform: "scale(0)",
-        opacity: 1
-      },
-      {
-        transform: "scale(2)",
-        opacity: 0
-      }
-    ],
-    {
-      duration: 700,
-      easing: "ease-out"
-    }
-  ).onfinish = () => {
-    sparkle.remove();
-  };
-}
-
-window.addEventListener(
-  "pointerdown",
-  e => {
-    createSparkle(e.clientX, e.clientY);
-  }
-);
-
 function addFloatingBackground() {
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
   const wrapper = document.createElement("div");
 
   wrapper.style.position = "fixed";
@@ -362,7 +422,9 @@ function addFloatingBackground() {
 
   document.body.prepend(wrapper);
 
-  for (let i = 0; i < 25; i++) {
+  const count = reduceMotion ? 8 : 25;
+
+  for (let i = 0; i < count; i++) {
     const circle = document.createElement("div");
 
     const size = 40 + Math.random() * 180;
@@ -379,65 +441,35 @@ function addFloatingBackground() {
       : "#d9b44a";
 
     circle.style.left = Math.random() * 100 + "vw";
-
     circle.style.top = Math.random() * 100 + "vh";
 
-    circle.animate(
-      [
-        {
-          transform:
-            "translateY(0px) translateX(0px)"
-        },
-        {
-          transform:
-            `translateY(${-80 - Math.random() * 120}px)
+    if (!reduceMotion) {
+      circle.animate(
+        [
+          {
+            transform:
+              "translateY(0px) translateX(0px)"
+          },
+          {
+            transform:
+              `translateY(${-80 - Math.random() * 120}px)
 translateX(${Math.random() * 80 - 40}px)`
+          }
+        ],
+        {
+          duration: 8000 + Math.random() * 12000,
+          iterations: Infinity,
+          direction: "alternate",
+          easing: "ease-in-out"
         }
-      ],
-      {
-        duration: 8000 + Math.random() * 12000,
-        iterations: Infinity,
-        direction: "alternate",
-        easing: "ease-in-out"
-      }
-    );
+      );
+    }
 
     wrapper.appendChild(circle);
   }
 }
 
 addFloatingBackground();
-
-function highlightCountdown() {
-  const boxes = [
-    ...document.querySelectorAll(
-      ".time-box"
-    )
-  ];
-
-  setInterval(() => {
-    boxes.forEach(box => {
-      box.animate(
-        [
-          {
-            transform: "scale(1)"
-          },
-          {
-            transform: "scale(1.04)"
-          },
-          {
-            transform: "scale(1)"
-          }
-        ],
-        {
-          duration: 350
-        }
-      );
-    });
-  }, 1000);
-}
-
-highlightCountdown();
 
 document.querySelectorAll(
   ".name"
@@ -649,8 +681,7 @@ document.addEventListener(
     if (document.hidden) {
       clearInterval(interval);
     } else {
-      clearInterval(interval);
-      interval = setInterval(nextSlide, 4500);
+      startSlideshow();
     }
   }
 );
@@ -685,11 +716,14 @@ console.log(
   "font-size:16px;color:#d9b44a;"
 );
 
+// These placeholders are replaced at deploy time by the GitHub Actions
+// workflow (.github/workflows/deploy.yml), which pulls the real numbers
+// from repository secrets. They are NOT committed to the repo.
 const numbers = {
-  carolina: "5551997536161",
-  felipe: "5551981968251",
-  mateus: "5551984564510",
-  paola: "5551991149626"
+  carolina: "__CAROLINA_NUMBER__",
+  felipe: "__FELIPE_NUMBER__",
+  mateus: "__MATEUS_NUMBER__",
+  paola: "__PAOLA_NUMBER__"
 };
 
 const names = {

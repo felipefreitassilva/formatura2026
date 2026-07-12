@@ -1,0 +1,66 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare site with real phone numbers
+        run: |
+          mkdir -p _site
+          cp -r ./* _site/ 2>/dev/null || true
+          rm -rf _site/.github _site/_site
+
+          sed -i \
+            -e "s/__CAROLINA_NUMBER__/${{ secrets.CAROLINA_NUMBER }}/g" \
+            -e "s/__FELIPE_NUMBER__/${{ secrets.FELIPE_NUMBER }}/g" \
+            -e "s/__MATEUS_NUMBER__/${{ secrets.MATEUS_NUMBER }}/g" \
+            -e "s/__PAOLA_NUMBER__/${{ secrets.PAOLA_NUMBER }}/g" \
+            _site/script.js
+
+      - name: Generate image manifest from assets/ folder
+        run: |
+          cd _site/assets
+
+          {
+            echo "["
+            first=1
+            for f in $(ls -1 | grep -Ei '\.(jpe?g|png|webp|gif)$' | grep -viE '^banner\.' | sort); do
+              if [ "$first" -eq 1 ]; then
+                first=0
+              else
+                echo ","
+              fi
+              printf '  "assets/%s"' "$f"
+            done
+            echo ""
+            echo "]"
+          } > assets.json
+
+          echo "Generated manifest:"
+          cat assets.json
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

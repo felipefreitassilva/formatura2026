@@ -122,14 +122,38 @@ h1 {
   line-height: 1.8;
 }
 
+.hero-names {
+  margin-top: 4px;
+
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+
+  color: var(--blue);
+}
+
 .scroll-indicator {
   margin-top: 40px;
 
+  border: none;
+  background: none;
+
+  font-family: inherit;
   font-size: .95rem;
+  color: inherit;
 
   opacity: .7;
 
+  cursor: pointer;
+
   animation: bounce 2s infinite;
+
+  transition: opacity .2s ease;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
 }
 
 section {
@@ -364,6 +388,10 @@ footer {
     font-size: 2.8rem;
   }
 
+  .hero-names {
+    font-size: .95rem;
+  }
+
   .countdown {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -420,10 +448,10 @@ footer {
 .rsvp-option {
   padding: 16px;
 
-  border: none;
+  border: 2px solid var(--blue);
   border-radius: 18px;
 
-  background: white;
+  background: transparent;
 
   color: var(--blue);
   font: inherit;
@@ -431,15 +459,13 @@ footer {
 
   cursor: pointer;
 
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
-
   transition: .18s;
 }
 
 .rsvp-option:hover {
   transform: translateY(-2px);
 
-  box-shadow: 0 14px 28px rgba(0, 0, 0, .12);
+  background: rgba(24, 76, 137, .06);
 }
 
 .rsvp-option:active {
@@ -473,4 +499,23 @@ footer {
 
 .rsvp-options.open+.rsvp-title {
   display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .scroll-indicator {
+    animation: none;
+  }
+
+  .slide {
+    transition: opacity .3s ease;
+  }
+
+  .hero-card {
+    animation: none;
+  }
 }
