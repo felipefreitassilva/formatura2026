@@ -102,10 +102,10 @@ setInterval(
 // by scanning the assets/ folder, so adding/removing a photo there is
 // enough — no HTML/JS changes needed.
 const FALLBACK_IMAGES = [
-  "assets/1648752181.jpg",
-  "assets/carol_paola.jpeg",
-  "assets/mateus_felipe.jpg",
-  "assets/1648750568.jpg"
+  "assets/01_Todos.jpg",
+  "assets/02_CarolPaola.jpeg",
+  "assets/03_MateusFelipe.jpg",
+  "assets/04_CarolMateus.jpg"
 ];
 
 const sliderEl = document.getElementById("slider");
