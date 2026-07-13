@@ -796,7 +796,7 @@ document.querySelectorAll(".rsvp-option")
         const msg =
           `Olá, ${names[person]}!
 
-Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30.
+Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h00.
 
 Nos vemos lá!`;
 
