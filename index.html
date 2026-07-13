@@ -58,7 +58,11 @@
       </h1>
 
       <div class="year">
-        2026
+        Engenharia de Software
+      </div>
+
+      <div class="hero-subinfo">
+        <span class="hero-date">📅 14 DE AGOSTO • 21H00</span>
       </div>
 
       <div class="pixel-divider" aria-hidden="true">
@@ -71,39 +75,16 @@
         Carolina · Felipe · Mateus · Paola
       </div>
 
-      <div class="pill-row">
-        <div class="pixel-pill">📅 14 DE AGOSTO • 21H00</div>
-        <div class="pixel-pill pixel-pill--tag">&lt;/&gt; ENGENHARIA DE SOFTWARE</div>
+      <div class="hero-rsvp">
+        <button class="btn btn-secondary rsvp-toggle" id="heroConfirmBtn" type="button">
+          🎉 CONFIRMAR PRESENÇA
+        </button>
+
+        <p class="rsvp-cta-hint">👆 CLIQUE AQUI PARA CONFIRMAR</p>
       </div>
 
       <div class="tagline">
         Uma noite especial merece pessoas especiais.<br>Esperamos você para comemorar esta conquista!
-      </div>
-
-      <div class="rsvp-area hero-rsvp">
-        <button class="btn btn-secondary rsvp-toggle" type="button">
-          🎉 CONFIRMAR PRESENÇA
-        </button>
-
-        <p class="rsvp-title">👇 QUEM TE CONVIDOU?</p>
-
-        <div class="rsvp-options">
-          <button class="rsvp-option" data-person="carolina">
-            CAROLINA
-          </button>
-
-          <button class="rsvp-option" data-person="felipe">
-            FELIPE
-          </button>
-
-          <button class="rsvp-option" data-person="mateus">
-            MATEUS
-          </button>
-
-          <button class="rsvp-option" data-person="paola">
-            PAOLA
-          </button>
-        </div>
       </div>
 
       <button class="scroll-indicator" id="scrollIndicator" type="button">
@@ -191,7 +172,7 @@
       </div>
 
       <div class="actions">
-        <div id="rsvpArea" class="rsvp-area">
+        <div id="mainRsvp" class="rsvp-area">
           <button class="btn btn-secondary rsvp-toggle" type="button">
             🎉 CONFIRMAR PRESENÇA
           </button>
@@ -265,7 +246,7 @@
       </p>
 
       <div class="details">
-        <details class="detail pixel-panel gift-card">
+        <details class="detail pixel-panel gift-card" data-person="carolina">
           <summary>Carolina</summary>
           <p>Ao invés de presentes, estou juntando uma grana para minha viagem dos sonhos à Disney como celebração da formatura! Se quiser contribuir, o PIX é:</p>
 
@@ -287,7 +268,7 @@
           <p>De qualquer forma, sua presença já é um presente e tanto! Com carinho, Carolina 🎓</p>
         </details>
 
-        <details class="detail pixel-panel gift-card">
+        <details class="detail pixel-panel gift-card" data-person="felipe">
           <summary>Felipe</summary>
           <p>Não tenho um pedido específico, mas ficaria muito feliz em ganhar um livro que você ache interessante - pode ser sobre qualquer assunto, me surpreenda! 📚</p>
 
@@ -309,12 +290,12 @@
           </button>
         </details>
 
-        <details class="detail pixel-panel gift-card">
+        <details class="detail pixel-panel gift-card" data-person="mateus">
           <summary>Mateus</summary>
           <p>Se quiser me dar alguma coisa, vou ficar feliz com uma bola de futebol ou qualquer coisa do Inter - sou apaixonado pelo Colorado! 🔴⚪</p>
         </details>
 
-        <details class="detail pixel-panel gift-card">
+        <details class="detail pixel-panel gift-card" data-person="paola">
           <summary>Paola</summary>
           <p>Ainda estou pensando no meu recado... volto aqui em breve! 😄</p>
         </details>

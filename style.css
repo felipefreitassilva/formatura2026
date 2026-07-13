@@ -138,9 +138,10 @@ h1 {
   margin-top: 14px;
   text-align: center;
 
-  font-family: "Press Start 2P", monospace;
-  font-size: 1rem;
-  letter-spacing: .5em;
+  font-family: "VT323", monospace;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  letter-spacing: .12em;
   color: var(--gold);
   text-shadow: 2px 2px 0 rgba(0, 0, 0, .4);
 }
@@ -230,6 +231,30 @@ section {
   text-align: center;
 }
 
+.hero-subinfo {
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hero-date {
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  letter-spacing: .04em;
+  color: var(--cream);
+}
+
+.hero-course {
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  color: var(--cyan-bright);
+  opacity: .85;
+}
+
 .hud-row {
   display: flex;
   justify-content: space-between;
@@ -287,7 +312,7 @@ section {
 }
 
 .pixel-pill {
-  padding: 10px 16px;
+  padding: 12px 18px;
 
   background: var(--panel-light);
   border: 2px solid var(--cyan);
@@ -295,7 +320,7 @@ section {
 
   font-family: "VT323", monospace;
   text-transform: uppercase;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   letter-spacing: .04em;
   color: var(--cream);
 }
@@ -588,6 +613,7 @@ section {
 .reveal-frame {
   position: relative;
   overflow: hidden;
+  touch-action: none;
 
   max-width: 420px;
   aspect-ratio: 4/5;
@@ -687,6 +713,8 @@ section {
 
   min-height: 60px;
 
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -750,6 +778,38 @@ footer {
 
 .hero-rsvp {
   margin-top: 28px;
+}
+
+.rsvp-cta-hint {
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: .04em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.rsvp-toggle {
+  border-color: var(--gold);
+}
+
+.btn-cta {
+  border-color: var(--gold);
+  font-size: 1.4rem;
+  min-height: 72px;
+
+  animation: ctaPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 .pix-key {
@@ -980,6 +1040,10 @@ footer {
 
   .reveal-fg {
     transition: none;
+  }
+
+  .btn-cta {
+    animation: none;
   }
 
   .toast {

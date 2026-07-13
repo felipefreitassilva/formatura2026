@@ -653,11 +653,11 @@ smoothPulse();
 
 const revealFrame = document.getElementById("revealFrame");
 
-function setRevealPosition(clientX, clientY) {
+function setRevealPosition(clientX, clientY, offsetY = 0) {
   const rect = revealFrame.getBoundingClientRect();
 
   const x = ((clientX - rect.left) / rect.width) * 100;
-  const y = ((clientY - rect.top) / rect.height) * 100;
+  const y = ((clientY - rect.top - offsetY) / rect.height) * 100;
 
   revealFrame.style.setProperty("--reveal-x", x + "%");
   revealFrame.style.setProperty("--reveal-y", y + "%");
@@ -680,7 +680,7 @@ if (revealFrame) {
     "touchstart",
     e => {
       revealFrame.classList.add("reveal-active");
-      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY);
+      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY, 70);
     },
     { passive: true }
   );
@@ -688,9 +688,10 @@ if (revealFrame) {
   revealFrame.addEventListener(
     "touchmove",
     e => {
-      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault()
+      setRevealPosition(e.touches[0].clientX, e.touches[0].clientY, 70);
     },
-    { passive: true }
+    { passive: false }
   );
 
   revealFrame.addEventListener("touchend", () => {
@@ -774,6 +775,16 @@ const inviterMap = {
 
 const invitedBy = inviterMap[rsvpParams.get("i")] || null;
 
+if (invitedBy) {
+  const giftCard = document.querySelector(
+    `.gift-card[data-person="${invitedBy}"]`
+  );
+
+  if (giftCard) {
+    giftCard.open = true;
+  }
+}
+
 document.querySelectorAll(".rsvp-area").forEach(area => {
   const rsvpButton = area.querySelector(".rsvp-toggle");
   const rsvpOptions = area.querySelector(".rsvp-options");
@@ -807,29 +818,70 @@ document.querySelectorAll(".rsvp-area").forEach(area => {
   );
 });
 
-document.querySelectorAll(".rsvp-option")
-  .forEach(button => {
-    button.addEventListener(
-      "click",
-      () => {
-        const person = button.dataset.person;
-
-        const msg =
-          `Olá, ${names[person]}!
+function confirmPresence(person) {
+  const msg =
+    `Olá, ${names[person]}!
 
 Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h00.
 
 Nos vemos lá!`;
 
-        window.open("https://wa.me/"
-          + numbers[person]
-          + "?text="
-          + encodeURIComponent(msg),
-          "_blank",
-          "noopener,noreferrer");
-      }
-    );
+  window.open(
+    "https://wa.me/" + numbers[person] + "?text=" + encodeURIComponent(msg),
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  const giftCard = document.querySelector(`.gift-card[data-person="${person}"]`);
+
+  if (giftCard) {
+    giftCard.open = true;
+    giftCard.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function expandRsvpArea(area) {
+  if (!area) {
+    return;
+  }
+
+  const toggle = area.querySelector(".rsvp-toggle");
+  const title = area.querySelector(".rsvp-title");
+  const options = area.querySelector(".rsvp-options");
+
+  if (toggle) {
+    toggle.style.display = "none";
+  }
+
+  if (title) {
+    title.classList.add("open");
+  }
+
+  if (options) {
+    options.classList.add("open");
+  }
+}
+
+document.querySelectorAll(".rsvp-option").forEach(button => {
+  button.addEventListener("click", () => {
+    confirmPresence(button.dataset.person);
   });
+});
+
+const heroConfirmBtn = document.getElementById("heroConfirmBtn");
+const mainRsvp = document.getElementById("mainRsvp");
+
+if (heroConfirmBtn) {
+  heroConfirmBtn.addEventListener("click", () => {
+    if (invitedBy) {
+      confirmPresence(invitedBy);
+      return;
+    }
+
+    expandRsvpArea(mainRsvp);
+    mainRsvp.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
 
 const toast = document.getElementById("toast");
 
