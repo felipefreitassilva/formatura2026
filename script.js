@@ -142,7 +142,7 @@ function nextSlide() {
 
 function startSlideshow() {
   clearInterval(interval);
-  interval = setInterval(nextSlide, 4500);
+  interval = setInterval(nextSlide, 2345);
 }
 
 async function loadSliderImages() {
