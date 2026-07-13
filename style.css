@@ -553,13 +553,13 @@ section {
   -webkit-mask-image: radial-gradient(
     circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
     rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, .55) 55%,
+    rgba(0, 0, 0, 1) 100%,
     rgba(0, 0, 0, 0) 100%
   );
   mask-image: radial-gradient(
     circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
     rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, .55) 55%,
+    rgba(0, 0, 0, 1) 100%,
     rgba(0, 0, 0, 0) 100%
   );
 
@@ -567,7 +567,7 @@ section {
 }
 
 .reveal-frame.reveal-active .reveal-fg {
-  --reveal-size: 160px;
+  --reveal-size: 100px;
 }
 
 .reveal-cursor-dot {
