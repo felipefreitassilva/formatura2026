@@ -763,6 +763,17 @@ const names = {
   paola: "Paola"
 };
 
+const rsvpParams = new URLSearchParams(window.location.search);
+
+const inviterMap = {
+  carol: "carolina",
+  felipe: "felipe",
+  mateus: "mateus",
+  paola: "paola"
+};
+
+const invitedBy = inviterMap[rsvpParams.get("i")] || null;
+
 document.querySelectorAll(".rsvp-area").forEach(area => {
   const rsvpButton = area.querySelector(".rsvp-toggle");
   const rsvpOptions = area.querySelector(".rsvp-options");
@@ -782,6 +793,16 @@ document.querySelectorAll(".rsvp-area").forEach(area => {
       }
 
       rsvpOptions.classList.add("open");
+
+      if (invitedBy) {
+        const match = rsvpOptions.querySelector(
+          `.rsvp-option[data-person="${invitedBy}"]`
+        );
+
+        if (match) {
+          match.click();
+        }
+      }
     }
   );
 });
