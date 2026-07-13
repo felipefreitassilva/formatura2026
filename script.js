@@ -14,7 +14,7 @@ if (scrollIndicator && countdownSection) {
 }
 
 const targetDate = new Date(
-  "2026-08-14T21:30:00"
+  "2026-08-14T21:00:00"
 );
 
 const previousCountdownValues = {
@@ -763,13 +763,15 @@ const names = {
   paola: "Paola"
 };
 
-const rsvpButton = document.getElementById("rsvpButton");
+document.querySelectorAll(".rsvp-area").forEach(area => {
+  const rsvpButton = area.querySelector(".rsvp-toggle");
+  const rsvpOptions = area.querySelector(".rsvp-options");
+  const rsvpTitle = area.querySelector(".rsvp-title");
 
-const rsvpOptions = document.getElementById("rsvpOptions");
+  if (!rsvpButton || !rsvpOptions) {
+    return;
+  }
 
-const rsvpTitle = document.getElementById("rsvpTitle");
-
-if (rsvpButton && rsvpOptions) {
   rsvpButton.addEventListener(
     "click",
     () => {
@@ -782,7 +784,7 @@ if (rsvpButton && rsvpOptions) {
       rsvpOptions.classList.add("open");
     }
   );
-}
+});
 
 document.querySelectorAll(".rsvp-option")
   .forEach(button => {
@@ -792,7 +794,7 @@ document.querySelectorAll(".rsvp-option")
         const person = button.dataset.person;
 
         const msg =
-`Olá, ${names[person]}!
+          `Olá, ${names[person]}!
 
 Estou confirmando minha presença na formatura do dia 14 de agosto de 2026 às 21h30.
 
@@ -807,3 +809,51 @@ Nos vemos lá!`;
       }
     );
   });
+
+const toast = document.getElementById("toast");
+
+let toastTimeout = null;
+
+function showToast(message) {
+  if (!toast) {
+    return;
+  }
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimeout);
+
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+document.querySelectorAll("[data-copy]").forEach(el => {
+  el.addEventListener("click", async () => {
+    const value = el.dataset.copy;
+
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch (err) {
+      const textarea = document.createElement("textarea");
+
+      textarea.value = value;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (fallbackErr) {
+        console.warn("Copy failed:", fallbackErr);
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+    showToast("🔑 Chave PIX copiada!");
+  });
+});

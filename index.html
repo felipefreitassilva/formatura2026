@@ -32,8 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
 
   <link rel="stylesheet" href="style.css">
 
@@ -151,46 +150,142 @@
           </a>
         </div>
 
-        <!-- Cardápio ainda não existe. Quando tiver o link/arquivo,
-             é só remover este comentário e preencher o href abaixo. -->
-        <!--
         <div class="detail pixel-panel">
-          <h3>🍽️ Cardápio</h3>
-          <p>Confira o menu da noite</p>
-
-          <a class="btn btn-primary detail-btn" target="_blank" rel="noopener noreferrer" href="#">
-            🍽️ VER CARDÁPIO
-          </a>
+          <h3>👔 Traje</h3>
+          <p
+            title="Homens: calça social ou chino, camisa/polo, sapato fechado. Mulheres: vestido, saia ou conjunto elegante.">
+            Esporte Fino</p>
         </div>
-        -->
       </div>
 
       <div class="actions">
         <div id="rsvpArea" class="rsvp-area">
-          <button class="btn btn-secondary" id="rsvpButton" type="button">
+          <button class="btn btn-secondary rsvp-toggle" type="button">
             🎉 CONFIRMAR PRESENÇA
           </button>
 
-          <p id="rsvpTitle" class="rsvp-title">👇 QUEM TE CONVIDOU?</p>
+          <p class="rsvp-title">👇 QUEM TE CONVIDOU?</p>
 
-          <div id="rsvpOptions" class="rsvp-options">
+          <div class="rsvp-options">
             <button class="rsvp-option" data-person="carolina">
-              👩 CAROLINA
+              CAROLINA
             </button>
 
             <button class="rsvp-option" data-person="felipe">
-              👨 FELIPE
+              FELIPE
             </button>
 
             <button class="rsvp-option" data-person="mateus">
-              👨 MATEUS
+              MATEUS
             </button>
 
             <button class="rsvp-option" data-person="paola">
-              👩 PAOLA
+              PAOLA
             </button>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section id="menu-section">
+    <div class="container">
+      <div class="section-title">
+        <span class="section-title-tag">MENU</span> 🍽️ Cardápio
+      </div>
+
+      <p class="tagline">O cardápio é o mesmo para todos os convidados.</p>
+
+      <div class="details">
+        <div class="detail pixel-panel">
+          <h3>🥗 Entrada</h3>
+          <p>A definir</p>
+        </div>
+
+        <div class="detail pixel-panel">
+          <h3>🍽️ Prato Principal</h3>
+          <p>A definir</p>
+        </div>
+
+        <div class="detail pixel-panel">
+          <h3>🍰 Sobremesa</h3>
+          <p>A definir</p>
+        </div>
+
+        <div class="detail pixel-panel">
+          <h3>🥤 Bebidas</h3>
+          <p>A definir</p>
+        </div>
+      </div>
+
+      <p class="tagline">🌱 Opções vegetarianas disponíveis mediante aviso prévio.</p>
+    </div>
+  </section> -->
+
+  <section id="gifts-section">
+    <div class="container">
+      <div class="section-title">
+        <span class="section-title-tag">GIFT</span> 💌 Recado sobre Presentes
+      </div>
+
+      <p class="tagline">
+        Se bater aquela vontade de contribuir com essa nova fase, cada um deixou um recadinho por aqui:
+      </p>
+
+      <div class="details">
+        <details class="detail pixel-panel gift-card">
+          <summary>Carolina</summary>
+          <p>Ao invés de presentes, estou juntando uma grana para minha viagem dos sonhos à Disney como celebração da formatura! Se quiser contribuir, o PIX é:</p>
+
+          <button type="button" class="pix-key" data-copy="123456789">
+            🔑 PIX: 123456789 <span class="pix-copy-icon" aria-hidden="true">📋</span>
+          </button>
+
+          <p>Mas se preferir me presentear com algo físico, aqui vão algumas ideias:</p>
+
+          <ul class="gift-ideas">
+            <li>🧳 Mala de viagem</li>
+            <li>🎒 Bolsa/pochete transversal</li>
+            <li>👟 Tênis confortável pra andar bastante</li>
+            <li>🕶️ Óculos de sol</li>
+            <li>🔋 Power bank / carregador portátil</li>
+            <li>📸 Câmera instantânea ou acessórios pra fotos</li>
+          </ul>
+
+          <p>De qualquer forma, sua presença já é um presente e tanto! Com carinho, Carolina 🎓</p>
+        </details>
+
+        <details class="detail pixel-panel gift-card">
+          <summary>Felipe</summary>
+          <p>Não tenho um pedido específico, mas ficaria muito feliz em ganhar um livro que você ache interessante - pode ser sobre qualquer assunto, me surpreenda! 📚</p>
+
+          <p>Outras ideias, se preferir:</p>
+
+          <ul class="gift-ideas">
+            <li>🃏 Um baralho, sempre bem-vindo</li>
+            <li>🌍 Livros famosos, mas em outro idioma: gosto de ler em inglês, alemão ou francês</li>
+            <li>🎲 Um jogo de tabuleiro pra gerar conflito</li>
+            <li>🎁 Ou qualquer coisa que te lembre de mim</li>
+          </ul>
+
+          <hr class="gift-divider" />
+
+          <p>Se realmente estiver sem criatividade, vou deixar discretamente minha chave PIX por aqui - sempre ajuda nas viagens que não param de acontecer:</p>
+
+          <button type="button" class="pix-key" data-copy="pix@felipefs.dev">
+            🔑 PIX: pix@felipefs.dev <span class="pix-copy-icon" aria-hidden="true">📋</span>
+          </button>
+        </details>
+
+        <details class="detail pixel-panel gift-card">
+          <summary>Mateus</summary>
+          <p>Se quiser me dar alguma coisa, vou ficar feliz com uma bola de futebol ou qualquer coisa do Inter - sou apaixonado pelo Colorado! 🔴⚪</p>
+        </details>
+
+        <details class="detail pixel-panel gift-card">
+          <summary>Paola</summary>
+          <p>Ainda estou pensando no meu recado... volto aqui em breve! 😄</p>
+        </details>
       </div>
     </div>
   </section>
@@ -199,8 +294,9 @@
     <div class="container">
       <!-- Clique na imagem para trocar qual foto fica em primeiro plano. -->
       <div class="reveal-frame pixel-panel" id="revealFrame">
-        <img class="reveal-img reveal-img--real reveal-bg" src="./assets/banner.jpg" alt="Foto real do grupo">
-        <img class="reveal-img reveal-img--pixel reveal-fg" src="./assets/banner_16bit.png" alt="Versão pixelada do grupo">
+        <img class="reveal-img reveal-img--real reveal-fg" src="./assets/banner.jpg" alt="Foto real do grupo">
+        <img class="reveal-img reveal-img--pixel reveal-bg" src="./assets/banner_16bit.png"
+          alt="Versão pixelada do grupo">
         <div class="reveal-cursor-dot" aria-hidden="true"></div>
       </div>
 
@@ -212,7 +308,37 @@
     <div class="footer-panel pixel-panel">
       ESPERAMOS VOCÊ PARA CELEBRAR CONOSCO! 🎓✨
     </div>
+
+    <div class="actions footer-actions">
+      <div class="rsvp-area">
+        <button class="btn btn-secondary rsvp-toggle" type="button">
+          🎉 CONFIRMAR PRESENÇA
+        </button>
+
+        <p class="rsvp-title">👇 QUEM TE CONVIDOU?</p>
+
+        <div class="rsvp-options">
+          <button class="rsvp-option" data-person="carolina">
+            CAROLINA
+          </button>
+
+          <button class="rsvp-option" data-person="felipe">
+            FELIPE
+          </button>
+
+          <button class="rsvp-option" data-person="mateus">
+            MATEUS
+          </button>
+
+          <button class="rsvp-option" data-person="paola">
+            PAOLA
+          </button>
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 
 </html>

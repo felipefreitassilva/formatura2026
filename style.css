@@ -490,6 +490,77 @@ section {
   margin-bottom: 12px;
 }
 
+/* collapsible gift cards */
+.gift-card summary {
+  cursor: pointer;
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: "VT323", monospace;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 1.3rem;
+  color: var(--gold);
+}
+
+.gift-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.gift-card summary::after {
+  content: "+";
+  font-family: "Press Start 2P", monospace;
+  font-size: .85rem;
+  color: var(--cyan-bright);
+  margin-left: 10px;
+}
+
+.gift-card[open] summary::after {
+  content: "\2013";
+}
+
+.gift-card[open] summary {
+  margin-bottom: 12px;
+}
+
+.gift-card p {
+  animation: fadeUp .2s ease;
+}
+
+.pix-key {
+  display: inline-block;
+  margin-top: 12px;
+
+  padding: 8px 14px;
+
+  background: var(--panel-light);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 0 2px var(--bg-deep);
+
+  font-family: "VT323", monospace;
+  letter-spacing: .04em;
+  font-size: 1.05rem;
+  color: var(--cream);
+}
+
+.gift-ideas {
+  list-style: none;
+
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gift-ideas li {
+  font-size: 1.15rem;
+  color: var(--cream);
+}
+
 .detail p {
   font-size: 1.15rem;
   color: var(--cream);
@@ -550,18 +621,14 @@ section {
 .reveal-fg {
   z-index: 2;
 
-  -webkit-mask-image: radial-gradient(
-    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 100%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: radial-gradient(
-    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 100%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  -webkit-mask-image: radial-gradient(circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 100%,
+      rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 100%,
+      rgba(0, 0, 0, 0) 100%);
 
   transition: --reveal-size .35s ease;
 }
@@ -656,7 +723,10 @@ section {
 footer {
   padding: 80px 20px 120px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 34px;
 }
 
 .footer-panel {
@@ -668,6 +738,84 @@ footer {
   color: var(--cyan-bright);
 
   max-width: 500px;
+}
+
+.footer-actions {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 0;
+}
+
+.pix-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 4px 0;
+  padding: 8px 12px;
+
+  background: var(--panel-light);
+  border: 2px dashed var(--gold);
+
+  color: var(--cream);
+  font-family: "VT323", monospace;
+  font-size: 1.15rem;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: transform .08s ease, border-color .15s ease;
+}
+
+.pix-key:hover,
+.pix-key:focus-visible {
+  border-color: var(--cyan-bright);
+}
+
+.pix-key:active {
+  transform: translate(2px, 2px);
+}
+
+.pix-copy-icon {
+  font-size: 1rem;
+  opacity: .8;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 1000;
+
+  transform: translate(-50%, 20px);
+
+  padding: 12px 20px;
+
+  background: var(--panel);
+  border: 3px solid var(--cyan);
+  box-shadow:
+    0 0 0 3px var(--bg-deep),
+    var(--shadow-hard-sm);
+
+  color: var(--cyan-bright);
+  font-family: "VT323", monospace;
+  font-size: 1.1rem;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.gift-divider {
+  margin: 22px 0;
+  border: none;
+  border-top: 2px dashed var(--purple);
 }
 
 @keyframes bounce {
@@ -826,5 +974,10 @@ footer {
 
   .reveal-fg {
     transition: none;
+  }
+
+  .toast {
+    transition: opacity .15s ease;
+    transform: translate(-50%, 0);
   }
 }
