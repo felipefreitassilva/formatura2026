@@ -831,6 +831,8 @@ footer {
   cursor: pointer;
 
   transition: transform .08s ease, border-color .15s ease;
+
+  max-width: 100%;
 }
 
 .pix-key:hover,
@@ -842,9 +844,17 @@ footer {
   transform: translate(2px, 2px);
 }
 
+.pix-key-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 .pix-copy-icon {
   font-size: 1rem;
   opacity: .8;
+  flex-shrink: 0;
 }
 
 .toast {

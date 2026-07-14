@@ -34,6 +34,13 @@ jobs:
             -e "s/__PAOLA_NUMBER__/${{ secrets.PAOLA_NUMBER }}/g" \
             _site/script.js
 
+          sed -i \
+            -e "s/__CAROLINA_PIX__/${{ secrets.CAROLINA_PIX }}/g" \
+            -e "s/__FELIPE_PIX__/${{ secrets.FELIPE_PIX }}/g" \
+            -e "s/__MATEUS_PIX__/${{ secrets.MATEUS_PIX }}/g" \
+            -e "s/__PAOLA_PIX__/${{ secrets.PAOLA_PIX }}/g" \
+            _site/index.html
+
       - name: Generate image manifest from assets/ folder
         run: |
           cd _site/assets
