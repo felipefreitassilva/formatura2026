@@ -894,6 +894,18 @@ footer {
   border-top: 2px dashed var(--purple);
 }
 
+.menu-veggie-note {
+  margin-top: 28px;
+  padding: 18px 22px;
+
+  text-align: center;
+
+  border-color: var(--gold);
+
+  font-size: 1.15rem;
+  color: var(--cream);
+}
+
 @keyframes bounce {
 
   0%,
