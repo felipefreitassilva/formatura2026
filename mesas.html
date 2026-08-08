@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Números das Mesas - Formatura 2026</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+
+  <style>
+    :root {
+      --bg-deep: #0d1b3d;
+      --panel: #10203f;
+      --panel-light: #182d5c;
+      --purple: #2f6fd0;
+      --cyan: #5ec8f0;
+      --cyan-bright: #9be3ff;
+      --gold: #f4c430;
+      --cream: #f2efe6;
+      --shadow-hard: 6px 6px 0 rgba(0, 0, 0, .55);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    html,
+    body {
+      background: var(--bg-deep);
+      color: var(--cream);
+      font-family: "VT323", monospace;
+    }
+
+    body {
+      padding: 16px;
+    }
+
+    /* -------- on-screen only instructions -------- */
+    .print-note {
+      max-width: 700px;
+      margin: 0 auto 20px;
+
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--cyan-bright);
+      opacity: .8;
+    }
+
+    /* -------- one tent card = one printed page -------- */
+    .table-card {
+      max-width: 700px;
+      margin: 0 auto 24px;
+
+      background: var(--panel);
+      border: 3px solid var(--cyan);
+      box-shadow:
+        0 0 0 3px var(--bg-deep),
+        0 0 0 6px var(--purple),
+        var(--shadow-hard);
+
+      /* fixed height (not min-height) so the two halves below can be
+         forced to exactly 50% each, instead of growing with content */
+      height: 273mm;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tent-half {
+      flex: 0 0 50%;
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      padding: 10mm;
+    }
+
+    /* upside down so it reads right-side-up once the card is folded and stood up */
+    .tent-half--top {
+      transform: rotate(180deg);
+    }
+
+    .fold-line {
+      position: relative;
+
+      height: 0;
+      border-top: 2px dashed var(--purple);
+    }
+
+    .fold-line::after {
+      content: "✂ DOBRAR AQUI";
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      background: var(--panel);
+      padding: 0 10px;
+
+      font-size: .7rem;
+      letter-spacing: .1em;
+      color: var(--cyan);
+    }
+
+    .tent-label {
+      font-family: "VT323", monospace;
+      text-transform: uppercase;
+      letter-spacing: .3em;
+      font-size: 8mm;
+      color: var(--gold);
+
+      margin-bottom: 6mm;
+    }
+
+    .tent-number {
+      font-family: "Press Start 2P", monospace;
+      font-size: 55mm;
+      line-height: 1;
+      color: var(--cyan-bright);
+      text-shadow:
+        4mm 0 0 var(--purple),
+        0 4mm 0 var(--purple),
+        4mm 4mm 0 var(--purple),
+        6mm 6mm 0 rgba(0, 0, 0, .4);
+    }
+
+    .tent-tag {
+      margin-top: 8mm;
+
+      font-family: "VT323", monospace;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-size: 6mm;
+      color: var(--cream);
+      opacity: .8;
+    }
+
+    .tent-names {
+      margin-top: 3mm;
+
+      font-family: "VT323", monospace;
+      letter-spacing: .06em;
+      font-size: 5mm;
+      color: var(--cyan-bright);
+      opacity: .7;
+    }
+
+    /* -------- print rules -------- */
+    @media print {
+
+      html,
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: var(--bg-deep) !important;
+      }
+
+      body {
+        padding: 0;
+      }
+
+      .print-note {
+        display: none;
+      }
+
+      .table-card {
+        max-width: 100%;
+        margin: 0;
+        box-shadow: none;
+
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .table-card:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .fold-line::after {
+        display: none;
+      }
+
+      .fold-line {
+        border-top-width: 1px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <p class="print-note">
+    Imprima, corte cada página e dobre ao meio pela linha pontilhada — o número fica de cabeça pra cima dos dois
+    lados quando a mesa fica em pé.
+  </p>
+
+  <div id="cards"></div>
+
+  <script>
+    const TOTAL_TABLES = 10;
+    const container = document.getElementById("cards");
+
+    for (let i = 1; i <= TOTAL_TABLES; i++) {
+      const number = String(i).padStart(2, "0");
+
+      const card = document.createElement("div");
+      card.className = "table-card";
+
+      card.innerHTML = `
+        <div class="tent-half tent-half--top">
+          <div class="tent-label">Mesa</div>
+          <div class="tent-number">${number}</div>
+          <div class="tent-tag">🎓 Formatura 2026</div>
+          <div class="tent-names">Carolina · Felipe · Mateus · Paola</div>
+        </div>
+
+        <div class="fold-line"></div>
+
+        <div class="tent-half tent-half--bottom">
+          <div class="tent-label">Mesa</div>
+          <div class="tent-number">${number}</div>
+          <div class="tent-tag">🎓 Formatura 2026</div>
+          <div class="tent-names">Carolina · Felipe · Mateus · Paola</div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    }
+  </script>
+</body>
+
+</html>
