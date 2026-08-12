@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Banner 1008x336 - Formatura Engenharia de Software</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+
+  <style>
+    :root {
+      --bg-deep: #0d1b3d;
+      --bg-dusk: #14295c;
+      --panel: #10203f;
+      --panel-light: #182d5c;
+      --purple: #2f6fd0;
+      --purple-dim: #1c3560;
+      --cyan: #5ec8f0;
+      --cyan-bright: #9be3ff;
+      --gold: #f4c430;
+      --cream: #f2efe6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg-deep);
+    }
+
+    body {
+      width: 1008px;
+      background: var(--bg-deep);
+      font-family: "VT323", monospace;
+      color: var(--cream);
+    }
+
+    /* -------- canvas: exactly 1008x336px -------- */
+    .banner {
+      position: relative;
+      overflow: hidden;
+
+      width: 1008px;
+      height: 336px;
+
+      background: linear-gradient(180deg, var(--bg-deep) 0%, #0e1a3a 55%, var(--bg-dusk) 100%);
+      border: 3px solid var(--cyan);
+    }
+
+    .frame-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--purple);
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .frame-corner.tl {
+      top: 8px;
+      left: 8px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .frame-corner.tr {
+      top: 8px;
+      right: 8px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .frame-corner.bl {
+      bottom: 8px;
+      left: 8px;
+      border-right: none;
+      border-top: none;
+    }
+
+    .frame-corner.br {
+      bottom: 8px;
+      right: 8px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+
+      background-image:
+        radial-gradient(1.5px 1.5px at 4% 20%, rgba(255, 255, 255, .7) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 10% 70%, rgba(255, 255, 255, .5) 50%, transparent 51%),
+        radial-gradient(2px 2px at 16% 40%, rgba(159, 227, 255, .7) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 24% 85%, rgba(255, 255, 255, .4) 50%, transparent 51%),
+        radial-gradient(2px 2px at 30% 15%, rgba(255, 255, 255, .6) 50%, transparent 51%);
+      background-repeat: no-repeat;
+    }
+
+    .skyline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 18px;
+
+      background-color: var(--bg-dusk);
+      border-top: 2px solid var(--purple-dim);
+    }
+
+    /* -------- title: left side, vertically centered -------- */
+    .title-block {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .course-sub {
+      font-family: "VT323", monospace;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 44px;
+      line-height: 1.15;
+      color: var(--cyan-bright);
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, .4);
+    }
+
+    .course-main {
+      margin-top: 6px;
+
+      font-family: "Press Start 2P", monospace;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 46px;
+      line-height: 1.3;
+      color: var(--cyan-bright);
+      text-shadow:
+        0 0 2px var(--purple),
+        0 0 4px var(--purple),
+        0 0 7px var(--purple),
+        3px 3px 0 rgba(0, 0, 0, .4);
+    }
+
+    /* -------- character cards: right side, small cluster -------- */
+    .char-card {
+      position: absolute;
+      width: 108px;
+      height: 158px;
+
+      background: var(--panel);
+      border: 2px solid var(--cyan);
+      box-shadow:
+        0 0 0 2px var(--bg-deep),
+        0 0 0 3px var(--purple),
+        3px 3px 0 rgba(0, 0, 0, .5);
+
+      transform: rotate(var(--tilt));
+    }
+
+    .char-card img {
+      display: block;
+      width: 100%;
+      height: 128px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .char-card img.sprite-img {
+      object-fit: contain;
+      object-position: bottom center;
+      background: transparent;
+      image-rendering: pixelated;
+    }
+
+    .controls-bar {
+      width: 1008px;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+
+      padding: 8px 10px;
+      background: var(--bg-deep);
+    }
+
+    .pose-toggle-btn {
+      padding: 3px 8px;
+
+      background: var(--panel-light);
+      border: 2px solid var(--cyan);
+      box-shadow:
+        0 0 0 2px var(--bg-deep),
+        2px 2px 0 rgba(0, 0, 0, .5);
+
+      font-family: "VT323", monospace;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 13px;
+      color: var(--cyan-bright);
+      cursor: pointer;
+    }
+
+    .pose-toggle-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .pose-toggle-btn:active {
+      transform: translateY(1px);
+    }
+
+    .frame-select {
+      display: flex;
+      gap: 3px;
+    }
+
+    .frame-btn {
+      width: 17px;
+      height: 17px;
+      padding: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--panel-light);
+      border: 2px solid var(--cyan);
+      box-shadow:
+        0 0 0 2px var(--bg-deep),
+        2px 2px 0 rgba(0, 0, 0, .5);
+
+      font-family: "VT323", monospace;
+      font-size: 11px;
+      color: var(--cyan-bright);
+      cursor: pointer;
+    }
+
+    .frame-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .frame-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--panel);
+    }
+
+    @media print {
+      .no-capture {
+        display: none !important;
+      }
+    }
+
+    .char-name {
+      height: 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: "Press Start 2P", monospace;
+      text-transform: uppercase;
+      font-size: 8px;
+      letter-spacing: .04em;
+      color: var(--gold);
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+    }
+
+    .card-felipe {
+      top: 80px;
+      left: 46px;
+      --tilt: -4deg;
+    }
+
+    .card-paola {
+      top: 92px;
+      left: 170px;
+      --tilt: 3deg;
+      z-index: 2;
+    }
+
+    .card-carolina {
+      top: 92px;
+      left: 730px;
+      --tilt: -3deg;
+      z-index: 2;
+    }
+
+    .card-mateus {
+      top: 80px;
+      left: 854px;
+      --tilt: 4deg;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <div class="skyline" aria-hidden="true"></div>
+
+    <span class="frame-corner tl" aria-hidden="true"></span>
+    <span class="frame-corner tr" aria-hidden="true"></span>
+    <span class="frame-corner bl" aria-hidden="true"></span>
+    <span class="frame-corner br" aria-hidden="true"></span>
+
+    <div class="title-block">
+      <div class="course-sub">&lt;/&gt; ENGENHARIA DE</div>
+
+      <div class="course-main">SOFTWARE</div>
+    </div>
+
+    <div class="char-card card-felipe">
+      <img class="sprite-img" src="assets/Banner/Felipe_01_cutout.png" alt="">
+      <div class="char-name">Felipe</div>
+    </div>
+
+    <div class="char-card card-paola">
+      <img class="sprite-img" src="assets/Banner/Paola_01_cutout.png" alt="">
+      <div class="char-name">Paola</div>
+    </div>
+
+    <div class="char-card card-carolina">
+      <img class="sprite-img" src="assets/Banner/Carol_01_cutout.png" alt="">
+      <div class="char-name">Carolina</div>
+    </div>
+
+    <div class="char-card card-mateus">
+      <img class="sprite-img" src="assets/Banner/Mateus_01_cutout.png" alt="">
+      <div class="char-name">Mateus</div>
+    </div>
+
+  </div>
+
+  <div class="controls-bar no-capture">
+    <div class="frame-select" role="group" aria-label="Select frame">
+      <button type="button" class="frame-btn" data-pose="01">1</button>
+      <button type="button" class="frame-btn" data-pose="02">2</button>
+      <button type="button" class="frame-btn" data-pose="03">3</button>
+      <button type="button" class="frame-btn" data-pose="04">4</button>
+      <button type="button" class="frame-btn" data-pose="05">5</button>
+    </div>
+
+    <button type="button" id="pose-btn" class="pose-toggle-btn">⏸ PAUSE</button>
+  </div>
+
+  <script>
+    (function () {
+      var poses = ['01', '02', '03', '02', '03', '04', '05', '04'];
+      var poseIndex = 0;
+      var frameMs = 350;
+
+      var dancers = [
+        { img: document.querySelector('.card-felipe img'), base: 'assets/Banner/Felipe_' },
+        { img: document.querySelector('.card-paola img'), base: 'assets/Banner/Paola_' },
+        { img: document.querySelector('.card-carolina img'), base: 'assets/Banner/Carol_' },
+        { img: document.querySelector('.card-mateus img'), base: 'assets/Banner/Mateus_' }
+      ];
+
+      function applyPose() {
+        var suffix = poses[poseIndex] + '_cutout.png';
+        dancers.forEach(function (d) {
+          if (d.img) d.img.src = d.base + suffix;
+        });
+      }
+
+      function step() {
+        poseIndex = (poseIndex + 1) % poses.length;
+        applyPose();
+      }
+
+      var btn = document.getElementById('pose-btn');
+      var timer = null;
+      var dancing = false;
+
+      function play() {
+        if (timer) return;
+        timer = setInterval(step, frameMs);
+        dancing = true;
+        if (btn) btn.textContent = '⏸ PAUSE';
+      }
+
+      function pause() {
+        clearInterval(timer);
+        timer = null;
+        dancing = false;
+        if (btn) btn.textContent = '▶ DANCE';
+      }
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          if (dancing) { pause(); } else { play(); }
+        });
+      }
+
+      var frameBtns = document.querySelectorAll('.frame-btn');
+      frameBtns.forEach(function (fb) {
+        fb.addEventListener('click', function () {
+          pause();
+          var p = fb.getAttribute('data-pose');
+          var suffix = p + '_cutout.png';
+          dancers.forEach(function (d) {
+            if (d.img) d.img.src = d.base + suffix;
+          });
+          frameBtns.forEach(function (x) { x.classList.remove('active'); });
+          fb.classList.add('active');
+        });
+      });
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        pause();
+      } else {
+        play();
+      }
+    })();
+  </script>
+</body>
+
+</html>
