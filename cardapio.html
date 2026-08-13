@@ -7,8 +7,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
     @page {
-      size: A4 portrait;
-      margin: 12mm;
+      size: 100mm 200mm;
+      margin: 5mm;
     }
 
     * {
@@ -84,10 +84,39 @@
       font-size: 1.8rem;
       line-height: 1.3;
       color: #9be3ff;
-      text-shadow: 
+      text-shadow:
         3px 3px 0 #2f6fd0,
         5px 5px 0 rgba(0, 0, 0, 0.5);
       margin-bottom: 8px;
+
+      /* Press Start 2P has no real "Á" glyph — the browser fallback
+         squashes the whole letter shorter to fit the accent inside its
+         box. So the text is written plain ("CARDAPIO", untouched, full
+         height on every letter) and the accent below is a separate mark
+         positioned on top of it — not part of the text run at all.
+         display:inline-block makes h1 hug the text width instead of
+         spanning the full card, so the "ch" position below (a monospace
+         character-width unit) lines up with the actual glyph it's sized
+         against, regardless of the parent's centering. */
+      display: inline-block;
+      position: relative;
+    }
+
+    /* "CARDAPIO" — the accented letter is the 5th character (index 4),
+       so its center sits at 4.5 character-widths from the left edge. */
+    h1::after {
+      content: "";
+      position: absolute;
+      left: 4.5ch;
+      bottom: 100%;
+      margin-bottom: 0.06em;
+      width: 0.32em;
+      height: 0.12em;
+      background: currentColor;
+      box-shadow:
+        0.06em 0.06em 0 #2f6fd0,
+        0.1em 0.1em 0 rgba(0, 0, 0, 0.5);
+      transform: translateX(-50%) rotate(-40deg);
     }
 
     .subtitle {
@@ -200,20 +229,24 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        /* A4 (297mm) minus the two 12mm @page margins = usable printable height.
-           Using a physical unit here (instead of 100vh) centers reliably against
-           the actual page box, rather than depending on how each browser/printer
-           maps viewport height during print. */
-        min-height: 273mm;
+        /* 200mm page height minus the two 5mm @page margins = usable printable
+           height. Using a physical unit here (instead of 100vh) centers reliably
+           against the actual page box, rather than depending on how each
+           browser/printer maps viewport height during print. */
+        min-height: 190mm;
         padding: 0;
       }
 
       .menu-card {
         max-width: 100%;
-        border: none;
-        box-shadow: none;
-        background: transparent;
-        padding: 10mm 8mm;
+        /* Keep a visible pixel-frame border on print, echoing the cyan
+           border used on the banner_* assets, instead of stripping it. */
+        border: 2px solid #5ec8f0;
+        box-shadow:
+          0 0 0 1.5px #0d1b3d,
+          0 0 0 3px #2f6fd0;
+        background: #10203f;
+        padding: 4mm 3mm;
       }
 
       .menu-panel {
@@ -231,6 +264,70 @@
          grid column reserved, so the centered title doesn't shift off-center. */
       .hud-header span:last-child {
         visibility: hidden;
+      }
+
+      /* The 10x20cm card is only ~90mm wide inside its margins, far narrower
+         than the desktop 740px layout was designed for — so print reuses the
+         mobile single-column stack and scales every font/spacing value down
+         (but up from a first pass that left too much empty space) to fill
+         the small page. */
+      .hud-header {
+        font-size: 0.8rem;
+        margin-bottom: 4.5mm;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+        margin-bottom: 3.5mm;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 3.5mm;
+      }
+
+      .divider {
+        gap: 3.5mm;
+        margin: 4.5mm 0;
+      }
+
+      .divider-line {
+        height: 2px;
+      }
+
+      .divider-icon {
+        font-size: 0.9rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 3.5mm;
+        margin-top: 4.5mm;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+
+      .menu-panel {
+        padding: 3.5mm 4mm;
+      }
+
+      .menu-panel h3 {
+        font-size: 1rem;
+        margin-bottom: 2.2mm;
+        padding-bottom: 1.8mm;
+      }
+
+      .menu-panel li {
+        font-size: 1.05rem;
+        line-height: 1.38;
+        margin-bottom: 1.3mm;
+      }
+
+      .footer-note {
+        font-size: 0.8rem;
+        margin-top: 4.5mm;
       }
     }
 
@@ -267,7 +364,7 @@
       <span>🪙</span>
     </div>
 
-    <h1>CARDÁPIO</h1>
+    <h1 aria-label="CARDÁPIO">CARDAPIO</h1>
     <div class="subtitle">Carolina · Felipe · Mateus · Paola</div>
 
     <div class="divider">
