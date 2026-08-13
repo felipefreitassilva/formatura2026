@@ -30,8 +30,13 @@
     }
 
     @page {
-      size: A4 portrait;
-      margin: 10mm;
+      /* Symmetric A-frame: two 10x10cm panels joined by a center fold.
+         The fold itself is what makes it self-standing (the two panels
+         lean apart into an inverted V) — no separate base tab needed.
+         No margin, so the printable area is exactly 100mm x 200mm and the
+         fold lands exactly at the midpoint. */
+      size: 100mm 200mm;
+      margin: 0;
     }
 
     html,
@@ -56,9 +61,9 @@
       opacity: .8;
     }
 
-    /* -------- one tent card = one printed page -------- */
+    /* -------- one marker card = one printed page -------- */
     .table-card {
-      max-width: 700px;
+      max-width: 100mm;
       margin: 0 auto 24px;
 
       background: var(--panel);
@@ -68,16 +73,16 @@
         0 0 0 6px var(--purple),
         var(--shadow-hard);
 
-      /* fixed height (not min-height) so the two halves below can be
-         forced to exactly 50% each, instead of growing with content */
-      height: 273mm;
+      /* fixed height (not min-height) so the two halves below are forced
+         to exactly 100mm each instead of growing with content */
+      height: 200mm;
 
       display: flex;
       flex-direction: column;
     }
 
     .tent-half {
-      flex: 0 0 50%;
+      flex: 0 0 100mm;
       overflow: hidden;
 
       display: flex;
@@ -85,7 +90,7 @@
       align-items: center;
       justify-content: center;
 
-      padding: 10mm;
+      padding: 6mm;
     }
 
     /* upside down so it reads right-side-up once the card is folded and stood up */
@@ -119,41 +124,41 @@
       font-family: "VT323", monospace;
       text-transform: uppercase;
       letter-spacing: .3em;
-      font-size: 8mm;
+      font-size: 5mm;
       color: var(--gold);
 
-      margin-bottom: 6mm;
+      margin-bottom: 4mm;
     }
 
     .tent-number {
       font-family: "Press Start 2P", monospace;
-      font-size: 55mm;
+      font-size: 28mm;
       line-height: 1;
       color: var(--cyan-bright);
       text-shadow:
-        4mm 0 0 var(--purple),
-        0 4mm 0 var(--purple),
-        4mm 4mm 0 var(--purple),
-        6mm 6mm 0 rgba(0, 0, 0, .4);
+        2mm 0 0 var(--purple),
+        0 2mm 0 var(--purple),
+        2mm 2mm 0 var(--purple),
+        3mm 3mm 0 rgba(0, 0, 0, .4);
     }
 
     .tent-tag {
-      margin-top: 8mm;
+      margin-top: 5mm;
 
       font-family: "VT323", monospace;
       text-transform: uppercase;
       letter-spacing: .15em;
-      font-size: 6mm;
+      font-size: 3.5mm;
       color: var(--cream);
       opacity: .8;
     }
 
     .tent-names {
-      margin-top: 3mm;
+      margin-top: 2mm;
 
       font-family: "VT323", monospace;
       letter-spacing: .06em;
-      font-size: 5mm;
+      font-size: 3mm;
       color: var(--cyan-bright);
       opacity: .7;
     }
@@ -203,8 +208,8 @@
 
 <body>
   <p class="print-note">
-    Imprima, corte cada página e dobre ao meio pela linha pontilhada — o número fica de cabeça pra cima dos dois
-    lados quando a mesa fica em pé.
+    Imprima em papel 10x20cm, corte a borda e dobre ao meio pela linha pontilhada — o número fica de cabeça pra cima
+    dos dois lados quando a mesa fica em pé.
   </p>
 
   <div id="cards"></div>
